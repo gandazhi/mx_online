@@ -15,7 +15,7 @@ class BaseSetting(object):
 
 class GlobalSetting(object):
     site_title = 'MX后台管理系统'
-    site_footer = 'gandazhi'
+    site_footer = 'gandazhi.Inc'
     menu_style = 'accordion'
 
 
