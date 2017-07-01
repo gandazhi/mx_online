@@ -6,11 +6,24 @@ from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyRecord
 from forms import LoginForm, RegisterForm
 from utils.email_send import send_register_email
 
 # Create your views here.
+
+
+class ActiveUserView(View):
+    # 用户激活
+    def get(self, request, active_code):
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
+        if all_records:
+            for records in all_records:
+                email = records.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+        return render(request, 'login.html')
 
 
 class RegisterView(View):
@@ -29,6 +42,7 @@ class RegisterView(View):
             user_profile.username = user_name
             user_profile.email = user_name
             user_profile.password = make_password(pass_word)
+            user_profile.is_active = False
             user_profile.save()
 
             send_register_email(user_name, 'register')
@@ -50,8 +64,11 @@ class LoginView(View):
             user = authenticate(username=user_name, password=pass_word)
 
             if user is not None:
-                login(request, user)
-                return render(request, 'index.html')
+                if user.is_active:
+                    login(request, user)
+                    return render(request, 'index.html')
+                else:
+                    return render(request, 'login.html', {'msg': '用户还未激活'})
             else:
                 return render(request, 'login.html', {'msg': '用户名或密码错误'})
         else:
