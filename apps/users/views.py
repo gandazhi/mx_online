@@ -38,13 +38,13 @@ class RegisterView(View):
             user_name = request.POST.get('email', '')
             pass_word = request.POST.get('password', '')
 
-            user_profile = UserProfile()
-            user_profile.username = user_name
             # 验证邮箱号是否注册过了
-            user_profile.email = user_name
             if UserProfile.objects.filter(email=user_name):
                 return render(request, 'register.html', {'register_form': register_form, 'msg': '该邮箱已经注册过了'})
             else:
+                user_profile = UserProfile()
+                user_profile.username = user_name
+                user_profile.email = user_name
                 user_profile.password = make_password(pass_word)
                 user_profile.is_active = False
                 user_profile.save()
