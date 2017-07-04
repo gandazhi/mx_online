@@ -10,17 +10,17 @@ __author__ = 'gandazhi'
 __date__ = '17-6-30 下午10:25'
 
 
-def random_str(randomlength=8):
+def random_str(randomLength=8):
     str = ''
     chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
     length = len(chars) - 1
     random = Random()
-    for i in range(randomlength):
+    for i in range(randomLength):
         str += chars[random.randint(0,length)]
     return str
 
 
-def send_register_email(email, send_type='register'):
+def send_email(email, send_type='register'):
     # 将发送邮件验证码的相关信息保存到数据库
     email_record = EmailVerifyRecord()
     code = random_str(16)

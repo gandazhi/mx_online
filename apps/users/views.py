@@ -8,12 +8,13 @@ from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile, EmailVerifyRecord
 from forms import LoginForm, RegisterForm, ForgetPwdFrom, ModifyPwdFrom
-from utils.email_send import send_register_email
+from utils.email_send import send_email
 
 # Create your views here.
 
 
 class ResetPwdView(View):
+    # 重置密码->把email传到password_reset.html中
     def get(self, request, reset_code):
         all_records = EmailVerifyRecord.objects.filter(code=reset_code)
         if all_records:
@@ -25,6 +26,7 @@ class ResetPwdView(View):
 
 
 class ModifyPwdView(View):
+    # 重置密码逻辑
     def post(self, request):
         modify_from = ModifyPwdFrom(request.POST)
         if modify_from.is_valid():
@@ -54,7 +56,7 @@ class ForgetPwdView(View):
             email = request.POST.get('email', '')
             if UserProfile.objects.filter(email=email):
                 # 判断是否有这个邮箱，如果有返回重置密码页，没有返回到forgetpwd.html并提示错误信息
-                send_register_email(email, 'forget')
+                send_email(email, 'forget')
                 return render(request, 'send_success.html')
             else:
                 return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': '这个没有邮箱注册' })
@@ -100,9 +102,8 @@ class RegisterView(View):
                 user_profile.is_active = False
                 user_profile.save()
 
-                send_register_email(user_name, 'register')
+                send_email(user_name, 'register')
                 return render(request, 'login.html')
-
         else:
             return render(request, 'register.html', {'register_form': register_form})
 
@@ -114,7 +115,7 @@ class LoginView(View):
 
     def post(self, request):
         login_form = LoginForm(request.POST)
-        if login_form.is_valid():  # 验证username和password是否为空
+        if login_form.is_valid():  # 验证username和password
             user_name = request.POST.get('username', '')
             pass_word = request.POST.get('password', '')
             user = authenticate(username=user_name, password=pass_word)
@@ -132,6 +133,7 @@ class LoginView(View):
 
 
 class CustomBackend(ModelBackend):
+    # 添加使用邮箱登录和使用用户名登录，重写authenticate()方法
     def authenticate(self, username=None, password=None, **kwargs):
         try:
             user = UserProfile.objects.get(Q(username=username) | Q(email=username))
