@@ -59,8 +59,9 @@ class ForgetPwdView(View):
                 send_email(email, 'forget')
                 return render(request, 'send_success.html')
             else:
-                return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': '这个没有邮箱注册' })
+                return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': u'这个没有邮箱注册' })
         else:
+            # return render(request, 'login.html')
             return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd})
 
 
