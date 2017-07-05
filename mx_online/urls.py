@@ -19,7 +19,7 @@ from django.conf.urls import url, include
 from django.views.generic import TemplateView
 import xadmin
 
-from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView, LogoutView
 from organization.views import OrgView
 
 urlpatterns = [
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name='modify_pwd'),
     # 课程机构
     url(r'^org_list/$', OrgView.as_view(), name='org_list'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
 
 
 ]
