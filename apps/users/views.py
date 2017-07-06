@@ -1,8 +1,10 @@
 # _*_ coding:utf-8 _*_
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
+from django.urls import reverse
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 from .models import UserProfile, EmailVerifyRecord
@@ -58,8 +60,9 @@ class ForgetPwdView(View):
                 send_email(email, 'forget')
                 return render(request, 'send_success.html')
             else:
-                return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': '这个没有邮箱注册' })
+                return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': u'这个没有邮箱注册' })
         else:
+            # return render(request, 'login.html')
             return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd})
 
 
@@ -141,3 +144,8 @@ class CustomBackend(ModelBackend):
         except Exception as e:
             return None
 
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse("index"))
