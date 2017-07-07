@@ -20,7 +20,7 @@ from django.views.generic import TemplateView
 from django.views.static import serve
 import xadmin
 
-from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView, LogoutView
 from organization.views import OrgView
 from mx_online.settings import MEDIA_ROOT
 
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^forget/$', ForgetPwdView.as_view(), name='forget_pwd'),
     url(r'^reset/(?P<reset_code>.*)', ResetPwdView.as_view(), name='reset_pwd'),
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name='modify_pwd'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
     # 课程机构
     url(r'^org_list/$', OrgView.as_view(), name='org_list'),
     # 配置上传文件的访问处理函数
