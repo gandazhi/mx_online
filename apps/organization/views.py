@@ -15,6 +15,7 @@ class OrgView(View):
     def get(self, request):
         all_orgs = CourseOrg.objects.all()
         all_citys = CityDict.objects.all()
+        hot_orgs = all_orgs.order_by('-click_num')[:3]
 
         # 城市筛选
         city_id = request.GET.get('city', '')
@@ -25,6 +26,14 @@ class OrgView(View):
         ct = request.GET.get('ct', '')
         if ct:
             all_orgs = CourseOrg.objects.filter(category=ct)
+
+        # 排序
+        sort = request.GET.get('sort', '')
+        if sort:
+            if sort == 'study_nums':
+                all_orgs = all_orgs.order_by('-study_nums')
+            elif sort == 'course_nums':
+                all_orgs = all_orgs.order_by('-course_nums')
 
         try:
             page = request.GET.get('page', 1)
@@ -38,7 +47,9 @@ class OrgView(View):
                                                  'all_citys': all_citys,
                                                  'org_nums': org_nums,
                                                  'city_id': city_id,
-                                                 'category': ct})
+                                                 'category': ct,
+                                                 'hot_orgs': hot_orgs,
+                                                 'sort': sort})
 
     def post(self, request):
         pass
