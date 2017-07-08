@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
+
 from .models import UserProfile, EmailVerifyRecord
 from forms import LoginForm, RegisterForm, ForgetPwdFrom, ModifyPwdFrom
 from utils.email_send import send_email
