@@ -14,14 +14,14 @@
                     <a href=""><img width="214" src="{{ MEDIA_URL }}{{ course.image }}"/></a>
                     <div class="des">
                         <a href=""><h2>{{ course.name }}</h2></a>
-                        <span class="fl">课时：<i class="key">{{ course.learn_times }}</i></span>
+                        <span class="fl">课时：<i class="key">{{ course.learn_time }}</i></span>
                         <span class="fr">参加人数：{{ course.students }}</span>
                     </div>
                     <div class="bottom">
                         <span class="fl">{{ course.course_org.name }}</span>
                          <span class="star fr  notlogin
                             " data-favid="13"  data-fav-type="4">
-                            {{ course.fav_nums }}
+                            {{ course.fav_num }}
                         </span>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
 
 		</div>
 	</div>
-<div class="right companycenter layout" >
+    <div class="right companycenter layout" >
     <div class="head">
         <h1>机构教师</h1>
         <a class="green fr more" href="org-detail-teachers.html">查看更多  >  </a>
@@ -56,7 +56,7 @@
 
 
 </div>
-<div class="right companycenter layout" >
+    <div class="right companycenter layout" >
     <div class="head">
         <h1>机构介绍</h1>
         <a class="green fr more" href="org-detail-desc.html">查看更多  >  </a>
