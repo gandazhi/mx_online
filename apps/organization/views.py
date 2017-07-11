@@ -6,7 +6,6 @@ from django.http import HttpResponse
 
 from .models import CourseOrg, CityDict
 from .forms import UserAskForm
-from courses.models import Course
 
 # Create your views here.
 
@@ -28,7 +27,7 @@ class OrgView(View):
         # 类别筛选
         ct = request.GET.get('ct', '')
         if ct:
-            all_orgs = CourseOrg.objects.filter(category=ct)
+            all_orgs = all_orgs.filter(category=ct)
 
         # 排序
         sort = request.GET.get('sort', '')
@@ -46,13 +45,15 @@ class OrgView(View):
         orgs = p.page(page)
 
         org_nums = all_orgs.count()
+        current_page = 'org_list'
         return render(request, 'org-list.html', {'all_orgs': orgs,
                                                  'all_citys': all_citys,
                                                  'org_nums': org_nums,
                                                  'city_id': city_id,
                                                  'category': ct,
                                                  'hot_orgs': hot_orgs,
-                                                 'sort': sort})
+                                                 'sort': sort,
+                                                 'current_page': current_page})
 
 
 class AddUserAskView(View):

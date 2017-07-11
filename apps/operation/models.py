@@ -20,9 +20,14 @@ class UserAsk(models.Model):
         verbose_name = u'用户咨询'
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return self.name
+
 
 class CourseComments(models.Model):
-    '课程评论'
+    """
+    课程评论
+    """
     user = models.ForeignKey(UserProfile, verbose_name=u'用户')
     course = models.ForeignKey(Course, verbose_name=u'课程')
     comments = models.CharField(max_length=200, verbose_name=u'评论')
