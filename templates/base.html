@@ -79,8 +79,8 @@
                         <ul>
                             <li class="{% ifequal current_page '' %}active{% endifequal %}"><a href="{% url 'index' %}">首页</a>
                             </li>
-                            <li>
-                                <a href="course-list.html">
+                            <li class="{% ifequal current_page 'course' %}active{% endifequal %}">
+                                <a href="{% url 'course:course_list' %}">
                                     公开课<img class="hot" src="{% static 'images/nav_hot.png' %}">
                                 </a>
                             </li>
