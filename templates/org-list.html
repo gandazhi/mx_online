@@ -183,6 +183,7 @@
                             $('#jsStayForm')[0].reset();
                             console.log('success');
                             alert("提交成功");
+                            $('#jsCompanyTips').html("")
                         } else if (data.status == 'fail') {
                             $('#jsCompanyTips').html(data.msg);
                             console.log('error');
