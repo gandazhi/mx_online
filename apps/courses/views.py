@@ -12,4 +12,6 @@ class CouresListView(View):
     def get(self, request):
         course = Course.objects.all()
         current_page = 'course'
-        return render(request, 'course-list.html', {'course': course, 'current_page': current_page})
+        hot_course = course.order_by('fav_num')[:3]
+        return render(request, 'course-list.html', {'course': course, 'current_page': current_page,
+                                                    'hot_course': hot_course})
