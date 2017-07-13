@@ -32,3 +32,11 @@ class CouresListView(View):
         return render(request, 'course-list.html',
                       {'current_page': current_page, 'hot_course': hot_course, 'course_list': course_list,
                        'second_page': second_page})
+
+
+class CourseDetail(View):
+    def get(self, request, course_id):
+        current_page = 'course'
+        course = Course.objects.get(id=int(course_id))
+
+        return render(request, 'course-detail.html', {'course': course})
