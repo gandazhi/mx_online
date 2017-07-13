@@ -21,9 +21,9 @@
                 <div class="left layout">
                     <div class="head">
                         <ul class="tab_header">
-                            <li class="active"><a href="?sort=">最新 </a></li>
-                            <li><a href="?sort=hot">最热门</a></li>
-                            <li><a href="?sort=students">参与人数</a></li>
+                            <li class="{% ifequal second_page '' %}active{% endifequal %}"><a href="?sort=">最新 </a></li>
+                            <li class="{% ifequal second_page 'hot' %}active{% endifequal %}"><a href="?sort=hot">最热门</a></li>
+                            <li class="{% ifequal second_page 'participation' %}active{% endifequal %}"><a href="?sort=students">参与人数</a></li>
                         </ul>
                     </div>
                     <div id="inWindow">

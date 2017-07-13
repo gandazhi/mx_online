@@ -13,8 +13,16 @@ class CouresListView(View):
     def get(self, request):
         course = Course.objects.all()
         current_page = 'course'
+        second_page = ''
         hot_course = course.order_by('fav_num')[:3]
 
+        sort = request.GET.get('sort', '')
+        if sort == 'hot':
+            course = course.order_by('-fav_num')
+            second_page = 'hot'
+        elif sort == 'students':
+            second_page = 'participation'
+            course = course.order_by('-students')
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
@@ -22,4 +30,5 @@ class CouresListView(View):
         p = Paginator(course, 6, request=request)
         course_list = p.page(page)
         return render(request, 'course-list.html',
-                      {'current_page': current_page, 'hot_course': hot_course, 'course_list': course_list})
+                      {'current_page': current_page, 'hot_course': hot_course, 'course_list': course_list,
+                       'second_page': second_page})
