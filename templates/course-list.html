@@ -29,41 +29,52 @@
                     <div id="inWindow">
                         <div class="tab_cont " id="content">
                             <div class="group_list">
-                                {% for all_course in course %}
+                                {% for all_course in course_list.object_list %}
                                     <div class="box">
-                                    <a href="course-detail.html">
-                                        <img width="280" height="350" class="scrollLoading"
-                                             src="{{ MEDIA_URL }}{{ all_course.image }}"/>
-                                    </a>
-                                    <div class="des">
                                         <a href="course-detail.html">
-                                            <h2>{{ all_course.name }}</h2>
+                                            <img width="280" height="350" class="scrollLoading"
+                                                 src="{{ MEDIA_URL }}{{ all_course.image }}"/>
                                         </a>
-                                        <span class="fl">时长：<i class="key">{{ all_course.learn_time }}</i></span>
-                                        <span class="fr">学习人数：{{ all_course.students }}&nbsp;&nbsp;</span>
-                                    </div>
-                                    <div class="bottom">
-                                        <a href="course-detail.html"><span class="fl">来自：{{ all_course.course_org.name }}</span></a>
-                                        <span class="star fr  notlogin
+                                        <div class="des">
+                                            <a href="course-detail.html">
+                                                <h2>{{ all_course.name }}</h2>
+                                            </a>
+                                            <span class="fl">时长：<i class="key">{{ all_course.learn_time }}</i></span>
+                                            <span class="fr">学习人数：{{ all_course.students }}&nbsp;&nbsp;</span>
+                                        </div>
+                                        <div class="bottom">
+                                            <a href="course-detail.html"><span
+                                                    class="fl">来自：{{ all_course.course_org.name }}</span></a>
+                                            <span class="star fr  notlogin
                                         " data-favid="15">
                                         {{ all_course.fav_num }}
                                     </span>
+                                        </div>
                                     </div>
-                                </div>
                                 {% endfor %}
                             </div>
                             <div class="pageturn">
                                 <ul class="pagelist">
 
-
-                                    <li class="active"><a href="?page=1">1</a></li>
-
-
-                                    <li><a href="?page=2" class="page">2</a></li>
-
-
-                                    <li class="long"><a href="?page=2">下一页</a></li>
-
+                                    {% if course_list.has_previous %}
+                                        <li class="long"><a href="?{{ course_list.previous_page_number.querystring }}">上一页</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for page in course_list.pages %}
+                                        {% if page %}
+                                            {% ifequal page course_list.number %}
+                                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                            {% else %}
+                                                <li><a href="?{{ page.querystring }}" class="active">{{ page }}</a></li>
+                                            {% endifequal %}
+                                        {% else %}
+                                            <li class="none"><a href="">...</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if course_list.has_next %}
+                                        <li class="long"><a href="?{{ course_list.next_page_number.querystring }}">下一页</a>
+                                        </li>
+                                    {% endif %}
 
                                 </ul>
                             </div>
@@ -75,17 +86,17 @@
                     <div class="group_recommend">
                         {% for hot_courses in hot_course %}
                             <dl>
-                            <dt>
-                                <a target="_blank" href="">
-                                    <img width="240" height="220" class="scrollLoading"
-                                         src="{{ MEDIA_URL }}{{ hot_courses.image }}"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <a target="_blank" href=""><h2> {{ hot_courses.name }}</h2></a>
-                                <span class="fl">难度：<i class="key">{{ hot_courses.degree }}</i></span>
-                            </dd>
-                        </dl>
+                                <dt>
+                                    <a target="_blank" href="">
+                                        <img width="240" height="220" class="scrollLoading"
+                                             src="{{ MEDIA_URL }}{{ hot_courses.image }}"/>
+                                    </a>
+                                </dt>
+                                <dd>
+                                    <a target="_blank" href=""><h2> {{ hot_courses.name }}</h2></a>
+                                    <span class="fl">难度：<i class="key">{{ hot_courses.degree }}</i></span>
+                                </dd>
+                            </dl>
                         {% endfor %}
                     </div>
                 </div>
