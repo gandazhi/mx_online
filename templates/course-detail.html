@@ -50,6 +50,7 @@
                                     {% for user_course in course.get_learn_user %}
                                         <span class="pic"><img width="40" height="40"
                                                                src="
+
                                                                        {{ MEDIA_URL }}{{ user_course.user.image }}"/></span>
                                     {% endfor %}
                                 </li>
@@ -97,10 +98,10 @@
                         <div class="clear">
                             <ul>
                                 <li>
-                                    <span>课 &nbsp;程&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{ course.course_org.course_nums }}</span>
+                                    <span>课 &nbsp;程&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ course.course_org.course_nums }}</span>
                                 </li>
                                 <li>
-                                    <span>教 &nbsp;师&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{ course.course_org.get_teacher_nums }}</span>
+                                    <span>教 &nbsp;师&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ course.course_org.get_teacher_nums }}</span>
                                 </li>
                                 <li>所在地区：&nbsp;&nbsp;{{ course.course_org.address }}</li>
                                 <li>认&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;证&nbsp;:
@@ -136,7 +137,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="right layout">
+                {% for relate_courses in relate_course %}
+                    <div class="right layout">
                     <div class="head">相关课程推荐</div>
                     <div class="group_recommend">
 
@@ -144,18 +146,19 @@
                             <dt>
                                 <a target="_blank" href="">
                                     <img width="240" height="220" class="scrollLoading"
-                                         src="{% static 'media/courses/2016/11/540e57300001d6d906000338-240-135_mvvGYHL.jpg' %}"/>
+                                         src="{{ MEDIA_URL }}{{ relate_courses.image }}"/>
                                 </a>
                             </dt>
                             <dd>
-                                <a target="_blank" href=""><h2> django实战项目</h2></a>
-                                <span class="fl">学习时长：<i class="key">0</i></span>
+                                <a target="_blank" href=""><h2>{{ relate_courses.name }}</h2></a>
+                                <span class="fl">学习时长：<i class="key">{{ relate_courses.learn_time }}</i></span>
                             </dd>
                         </dl>
 
 
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </section>

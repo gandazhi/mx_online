@@ -42,4 +42,10 @@ class CourseDetail(View):
         course.click_num += 1
         course.save()
 
-        return render(request, 'course-detail.html', {'course': course, 'current_page': current_page})
+        tag = course.tag
+        if tag:
+            relate_course = Course.objects.filter(tag=tag)[:1]
+        else:
+            relate_course = []
+        return render(request, 'course-detail.html', {'course': course, 'current_page': current_page,
+                                                      'relate_course': relate_course})
