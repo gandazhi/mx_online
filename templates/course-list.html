@@ -94,7 +94,7 @@
                                 </dt>
                                 <dd>
                                     <a target="_blank" href=""><h2> {{ hot_courses.name }}</h2></a>
-                                    <span class="fl">难度：<i class="key">{{ hot_courses.degree }}</i></span>
+                                    <span class="fl">难度：<i class="key">{{ hot_courses.get_degree_display }}</i></span>
                                 </dd>
                             </dl>
                         {% endfor %}

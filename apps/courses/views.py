@@ -9,16 +9,16 @@ from .models import Course
 # Create your views here.
 
 
-class CouresListView(View):
+class CoursesListView(View):
     def get(self, request):
-        course = Course.objects.all()
+        course = Course.objects.all().order_by('-add_time')
         current_page = 'course'
         second_page = ''
-        hot_course = course.order_by('fav_num')[:3]
+        hot_course = Course.objects.all().order_by('-click_num')[:3]
 
         sort = request.GET.get('sort', '')
         if sort == 'hot':
-            course = course.order_by('-fav_num')
+            course = course.order_by('-click_num')
             second_page = 'hot'
         elif sort == 'students':
             second_page = 'participation'
@@ -38,5 +38,8 @@ class CourseDetail(View):
     def get(self, request, course_id):
         current_page = 'course'
         course = Course.objects.get(id=int(course_id))
+        """课程记录点击数"""
+        course.click_num += 1
+        course.save()
 
-        return render(request, 'course-detail.html', {'course': course})
+        return render(request, 'course-detail.html', {'course': course, 'current_page': current_page})

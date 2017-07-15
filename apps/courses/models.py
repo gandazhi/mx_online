@@ -22,6 +22,7 @@ class Course(models.Model):
     image = models.ImageField(upload_to='courses/%Y/%m', verbose_name=u'封面图', max_length=100)
     click_num = models.IntegerField(default=0, verbose_name=u'点击数')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    category = models.CharField(max_length=20, verbose_name=u'课程类别', default=u'后端开发')
 
     class Meta:
         verbose_name = u'课程'
@@ -29,6 +30,9 @@ class Course(models.Model):
 
     def __unicode__(self):
         return '{0}'.format(self.name)
+
+    def get_learn_user(self):
+        return self.usercourse_set.all()[:5]
 
 
 class Lesson(models.Model):
@@ -39,6 +43,9 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = u'章节'
         verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return self.name
 
 
 class Video(models.Model):
