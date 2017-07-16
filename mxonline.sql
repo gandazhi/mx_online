@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-07-12 23:27:34
+Date: 2017-07-16 21:42:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -202,24 +202,31 @@ CREATE TABLE `courses_course` (
   `click_num` int(11) NOT NULL,
   `add_time` datetime(6) NOT NULL,
   `course_org_id` int(11),
+  `category` varchar(20) NOT NULL,
+  `tag` varchar(10) NOT NULL,
+  `teacher_id` int(11),
+  `teacher_tell` varchar(300) NOT NULL,
+  `you_need_know` varchar(300) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `courses_course_11456c5a` (`course_org_id`),
-  CONSTRAINT `courses_cour_course_org_id_4d2c4aab_fk_organization_courseorg_id` FOREIGN KEY (`course_org_id`) REFERENCES `organization_courseorg` (`id`)
+  KEY `courses_course_d9614d40` (`teacher_id`),
+  CONSTRAINT `courses_cour_course_org_id_4d2c4aab_fk_organization_courseorg_id` FOREIGN KEY (`course_org_id`) REFERENCES `organization_courseorg` (`id`),
+  CONSTRAINT `courses_course_teacher_id_846fa526_fk_organization_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `organization_teacher` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of courses_course
 -- ----------------------------
-INSERT INTO `courses_course` VALUES ('1', 'django入门', 'django', 'django入门啊', 'primary', '200', '10', '1', 'courses/2017/07/imooc_logo.jpg', '0', '2017-07-09 14:14:00.000000', '1');
-INSERT INTO `courses_course` VALUES ('2', 'HTML+CSS基础课程', '本课程从最基本的概念开始讲起，步步深入，带领大家学习HTML、CSS样式基础知识，了解各种常用标签的意义以及基本用法，后半部分教程主要讲解CSS样式代码添加，为后面的案例课程打下基础。', '简介：本课程从最基本的概念开始讲起，步步深入，带领大家学习HTML、CSS样式基础知识，了解各种常用标签的意义以及基本用法，后半部分教程主要讲解CSS样式代码添加，为后面的案例课程打下基础。', 'primary', '540', '0', '0', 'courses/2017/07/htmlcss.jpg', '0', '2017-07-12 21:56:00.000000', '1');
-INSERT INTO `courses_course` VALUES ('3', 'Java入门', 'Java', '本教程为Java入门第一季，欢迎来到精彩的Java编程世界！Java语言已经成为当前软件开发行业中主流的开发语言。本教程将介绍Java环境搭建、工具使用、基础语法。带领大家一步一步的踏入Java达人殿堂！Let’s go!', 'primary', '120', '0', '0', 'courses/2017/07/java.jpg', '0', '2017-07-12 22:00:00.000000', '4');
-INSERT INTO `courses_course` VALUES ('4', 'Python入门', 'python', 'Python教程基础分《Python入门》和《Python进阶》两门课程，本视频教程是Python第一门课程，是Python开发的入门教程，将介绍Python语言的特点和适用范围，Python基本的数据类型，条件判断和循环，函数，以及Python特有的切片和列表生成式。希望本python教程能够让您快速入门并编写简单的Python程序。', 'primary', '200', '0', '0', 'courses/2017/07/python.jpg', '0', '2017-07-12 22:02:00.000000', '1');
-INSERT INTO `courses_course` VALUES ('5', 'Android攻城狮的第一门课（入门篇）', 'android', '本课程涵盖全部Android应用开发的基础，根据技能点的作用分为5个篇章，包括环境篇、控件篇、布局篇、组件篇和通用篇，本课程的目标就是“看得懂、学得会、做得出”，为后续的学习打下夯实的基础。', 'primary', '300', '0', '0', 'courses/2017/07/android.jpg', '0', '2017-07-12 22:03:00.000000', '2');
-INSERT INTO `courses_course` VALUES ('6', 'JavaScript深入浅出', 'JavaScript', '这是一个帮助您系统学习JavaScript编程语言的课程，该课由浅入深的介绍JavaScript的语言特性，结合实际例子解析常见误区，启发你的思考，帮助学习者从入门到掌握，提升您的 JavaScript 技能。', 'primary', '120', '0', '0', 'courses/2017/07/javascript.jpg', '0', '2017-07-12 22:04:00.000000', '4');
-INSERT INTO `courses_course` VALUES ('7', 'Ajax全接触', 'Ajax', '本课程通过一个简单的例子，由浅入深，循序渐进的介绍了Ajax的相关概念、原理、实现方式和应用方法，包含HTTP请求的概念、PHP的简单语法、JSON数据格式、Ajax的原生和jQuery实现、跨域等知识点。', 'primary', '100', '0', '0', 'courses/2017/07/ajax.jpg', '0', '2017-07-12 22:06:00.000000', '1');
-INSERT INTO `courses_course` VALUES ('8', 'AngularJS实战', 'AngularJS', '欢迎大家与大漠穷秋老师一起学习AngularJS的基础教程，让我们一起通过实例学习并学会AngularJS！', 'primary', '210', '0', '0', 'courses/2017/07/AngularJS.jpg', '0', '2017-07-12 22:07:00.000000', '5');
-INSERT INTO `courses_course` VALUES ('9', '手把手教你实现电商网站开发', '前端', '本课程主要介绍电商网站基本制作流程，通过电商网站分步的教学让大家了解和掌握电商网站制作的流程和注意事项。并且运用网站内学习过的知识点，更加快速的掌握整站的开发过程，增加开发经验。', 'middle', '500', '0', '0', 'courses/2017/07/前端.jpg', '0', '2017-07-12 22:08:00.000000', '1');
-INSERT INTO `courses_course` VALUES ('10', 'Spring MVC起步', 'Spring', 'Spring MVC为我们提供了一个基于组件和松耦合的MVC实现框架。在使用Java中其它MVC框架多年之后，面对Spring MVC有一种相见恨晚的感觉。Spring MVC是如此的优雅，轻盈与简洁， 让人从其它框架的桎梏解脱出来。本课程将带你步入Spring MVC', 'high', '800', '0', '0', 'courses/2017/07/spring.jpg', '0', '2017-07-12 22:10:00.000000', '1');
+INSERT INTO `courses_course` VALUES ('1', 'django入门', 'django', 'django入门啊', 'primary', '200', '10', '1', 'courses/2017/07/imooc_logo.jpg', '35', '2017-07-09 14:14:00.000000', '1', '后端开发', 'python', null, '', '');
+INSERT INTO `courses_course` VALUES ('2', 'HTML+CSS基础课程', '本课程从最基本的概念开始讲起，步步深入，带领大家学习HTML、CSS样式基础知识，了解各种常用标签的意义以及基本用法，后半部分教程主要讲解CSS样式代码添加，为后面的案例课程打下基础。', '简介：本课程从最基本的概念开始讲起，步步深入，带领大家学习HTML、CSS样式基础知识，了解各种常用标签的意义以及基本用法，后半部分教程主要讲解CSS样式代码添加，为后面的案例课程打下基础。', 'primary', '540', '0', '0', 'courses/2017/07/htmlcss.jpg', '2', '2017-07-12 21:56:00.000000', '1', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('3', 'Java入门', 'Java', '本教程为Java入门第一季，欢迎来到精彩的Java编程世界！Java语言已经成为当前软件开发行业中主流的开发语言。本教程将介绍Java环境搭建、工具使用、基础语法。带领大家一步一步的踏入Java达人殿堂！Let’s go!', 'primary', '120', '0', '0', 'courses/2017/07/java.jpg', '7', '2017-07-12 22:00:00.000000', '4', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('4', 'Python入门', 'python', 'Python教程基础分《Python入门》和《Python进阶》两门课程，本视频教程是Python第一门课程，是Python开发的入门教程，将介绍Python语言的特点和适用范围，Python基本的数据类型，条件判断和循环，函数，以及Python特有的切片和列表生成式。希望本python教程能够让您快速入门并编写简单的Python程序。', 'primary', '200', '0', '0', 'courses/2017/07/python.jpg', '5', '2017-07-12 22:02:00.000000', '1', '后端开发', 'python', null, '', '');
+INSERT INTO `courses_course` VALUES ('5', 'Android攻城狮的第一门课（入门篇）', 'android', '本课程涵盖全部Android应用开发的基础，根据技能点的作用分为5个篇章，包括环境篇、控件篇、布局篇、组件篇和通用篇，本课程的目标就是“看得懂、学得会、做得出”，为后续的学习打下夯实的基础。', 'primary', '300', '0', '0', 'courses/2017/07/android.jpg', '3', '2017-07-12 22:03:00.000000', '2', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('6', 'JavaScript深入浅出', 'JavaScript', '这是一个帮助您系统学习JavaScript编程语言的课程，该课由浅入深的介绍JavaScript的语言特性，结合实际例子解析常见误区，启发你的思考，帮助学习者从入门到掌握，提升您的 JavaScript 技能。', 'primary', '120', '0', '0', 'courses/2017/07/javascript.jpg', '0', '2017-07-12 22:04:00.000000', '4', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('7', 'Ajax全接触', 'Ajax', '本课程通过一个简单的例子，由浅入深，循序渐进的介绍了Ajax的相关概念、原理、实现方式和应用方法，包含HTTP请求的概念、PHP的简单语法、JSON数据格式、Ajax的原生和jQuery实现、跨域等知识点。', 'primary', '100', '0', '0', 'courses/2017/07/ajax.jpg', '0', '2017-07-12 22:06:00.000000', '1', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('8', 'AngularJS实战', 'AngularJS', '欢迎大家与大漠穷秋老师一起学习AngularJS的基础教程，让我们一起通过实例学习并学会AngularJS！', 'primary', '210', '0', '0', 'courses/2017/07/AngularJS.jpg', '0', '2017-07-12 22:07:00.000000', '5', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('9', '手把手教你实现电商网站开发', '前端', '本课程主要介绍电商网站基本制作流程，通过电商网站分步的教学让大家了解和掌握电商网站制作的流程和注意事项。并且运用网站内学习过的知识点，更加快速的掌握整站的开发过程，增加开发经验。', 'middle', '500', '0', '0', 'courses/2017/07/前端.jpg', '0', '2017-07-12 22:08:00.000000', '1', '后端开发', '', null, '', '');
+INSERT INTO `courses_course` VALUES ('10', 'Spring MVC起步', 'Spring', 'Spring MVC为我们提供了一个基于组件和松耦合的MVC实现框架。在使用Java中其它MVC框架多年之后，面对Spring MVC有一种相见恨晚的感觉。Spring MVC是如此的优雅，轻盈与简洁， 让人从其它框架的桎梏解脱出来。本课程将带你步入Spring MVC', 'high', '800', '0', '0', 'courses/2017/07/spring.jpg', '11', '2017-07-12 22:10:00.000000', '1', 'Java后端开发', 'java', '1', '1、MVC的思想精髓 2、Spring MVC的基本概念 3、如何利用Maven搭建Spring MVC开发环境 4、用Spring MVC实际开发一个功能模块', '本课程是JAVA高级课程，小伙伴们需要熟练掌握JAVA开发语言基础语法以及Spring IOC/DI的配置使用。对Spring不熟悉的童鞋慎入~~');
 
 -- ----------------------------
 -- Table structure for courses_courseresource
@@ -234,11 +241,12 @@ CREATE TABLE `courses_courseresource` (
   PRIMARY KEY (`id`),
   KEY `courses_courseresource_course_id_5eba1332_fk_courses_course_id` (`course_id`),
   CONSTRAINT `courses_courseresource_course_id_5eba1332_fk_courses_course_id` FOREIGN KEY (`course_id`) REFERENCES `courses_course` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of courses_courseresource
 -- ----------------------------
+INSERT INTO `courses_courseresource` VALUES ('1', 'spring相关jar', 'course/resource/2017/07/gradle-wrapper.jar', '2017-07-16 17:41:00.000000', '10');
 
 -- ----------------------------
 -- Table structure for courses_lesson
@@ -252,11 +260,18 @@ CREATE TABLE `courses_lesson` (
   PRIMARY KEY (`id`),
   KEY `courses_lesson_course_id_16bc4882_fk_courses_course_id` (`course_id`),
   CONSTRAINT `courses_lesson_course_id_16bc4882_fk_courses_course_id` FOREIGN KEY (`course_id`) REFERENCES `courses_course` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of courses_lesson
 -- ----------------------------
+INSERT INTO `courses_lesson` VALUES ('1', '第一节', '2017-07-15 14:46:00.000000', '1');
+INSERT INTO `courses_lesson` VALUES ('2', '第二节', '2017-07-15 14:47:00.000000', '1');
+INSERT INTO `courses_lesson` VALUES ('3', '第1章MVC简介', '2017-07-16 16:38:00.000000', '10');
+INSERT INTO `courses_lesson` VALUES ('4', '第2章 Spring MVC中的基本概念', '2017-07-16 16:38:00.000000', '10');
+INSERT INTO `courses_lesson` VALUES ('5', '第3章 配置Maven环境', '2017-07-16 16:39:00.000000', '10');
+INSERT INTO `courses_lesson` VALUES ('6', '第4章 Spring MVC实操', '2017-07-16 16:39:00.000000', '10');
+INSERT INTO `courses_lesson` VALUES ('7', '第5章 总结', '2017-07-16 16:39:00.000000', '10');
 
 -- ----------------------------
 -- Table structure for courses_video
@@ -267,14 +282,36 @@ CREATE TABLE `courses_video` (
   `name` varchar(100) NOT NULL,
   `add_time` datetime(6) NOT NULL,
   `lesson_id` int(11) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `learn_time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `courses_video_lesson_id_59f2396e_fk_courses_lesson_id` (`lesson_id`),
   CONSTRAINT `courses_video_lesson_id_59f2396e_fk_courses_lesson_id` FOREIGN KEY (`lesson_id`) REFERENCES `courses_lesson` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of courses_video
 -- ----------------------------
+INSERT INTO `courses_video` VALUES ('1', '1-1 Spring MVC起步课程简介', '2017-07-16 16:43:00.000000', '3', 'http://www.imooc.com/video/7237', '0');
+INSERT INTO `courses_video` VALUES ('2', '1-2 前端控制器', '2017-07-16 16:44:00.000000', '3', 'http://www.imooc.com/video/7126', '0');
+INSERT INTO `courses_video` VALUES ('3', '1-3 MVC概念', '2017-07-16 16:44:00.000000', '3', 'http://www.imooc.com/video/7165', '0');
+INSERT INTO `courses_video` VALUES ('4', '2-1 Spring MVC的静态概念', '2017-07-16 16:45:00.000000', '4', 'http://www.imooc.com/video/7501', '0');
+INSERT INTO `courses_video` VALUES ('5', '2-2 Spring MVC的动态概念', '2017-07-16 16:48:00.000000', '4', 'http://www.imooc.com/video/7530', '0');
+INSERT INTO `courses_video` VALUES ('6', '3-1 Maven介绍', '2017-07-16 16:49:00.000000', '5', 'http://www.imooc.com/video/7417', '0');
+INSERT INTO `courses_video` VALUES ('7', '3-2 Maven的安装', '2017-07-16 16:49:00.000000', '5', 'http://www.imooc.com/video/7418', '0');
+INSERT INTO `courses_video` VALUES ('8', '3-3 Maven的配置', '2017-07-16 16:49:00.000000', '5', 'http://www.imooc.com/video/7419', '0');
+INSERT INTO `courses_video` VALUES ('9', '3-4 用Maven创建项目', '2017-07-16 16:50:00.000000', '5', 'http://www.imooc.com/video/7531', '0');
+INSERT INTO `courses_video` VALUES ('10', '3-5 Hello Spring MVC', '2017-07-16 16:50:00.000000', '5', 'http://www.imooc.com/video/7533', '0');
+INSERT INTO `courses_video` VALUES ('11', '4-1 从配置文件开始', '2017-07-16 16:51:00.000000', '6', 'http://www.imooc.com/video/7681', '0');
+INSERT INTO `courses_video` VALUES ('12', '4-2 Controller-基础代码', '2017-07-16 16:51:00.000000', '6', 'http://www.imooc.com/video/7682', '0');
+INSERT INTO `courses_video` VALUES ('13', '4-3 Controller-现代方式', '2017-07-16 16:52:00.000000', '6', 'http://www.imooc.com/video/7683', '0');
+INSERT INTO `courses_video` VALUES ('14', '4-4 Controller-传统方式', '2017-07-16 16:52:00.000000', '6', 'http://www.imooc.com/video/7684', '0');
+INSERT INTO `courses_video` VALUES ('15', '4-5 Binding', '2017-07-16 16:53:00.000000', '6', 'http://www.imooc.com/video/8358', '0');
+INSERT INTO `courses_video` VALUES ('16', '4-6 FileUpload--单文件上传', '2017-07-16 16:53:00.000000', '6', 'http://www.imooc.com/video/8413', '0');
+INSERT INTO `courses_video` VALUES ('17', '4-7 JSON（上）', '2017-07-16 16:53:00.000000', '6', 'http://www.imooc.com/video/8602', '0');
+INSERT INTO `courses_video` VALUES ('18', '4-8 JSON（中）', '2017-07-16 16:54:00.000000', '6', 'http://www.imooc.com/video/8595', '0');
+INSERT INTO `courses_video` VALUES ('19', '4-9 JSON（下）', '2017-07-16 16:54:00.000000', '6', 'http://www.imooc.com/video/8655', '0');
+INSERT INTO `courses_video` VALUES ('20', '总结', '2017-07-16 16:55:00.000000', '7', 'http://www.imooc.com/video/8656', '0');
 
 -- ----------------------------
 -- Table structure for django_admin_log
@@ -351,7 +388,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -386,6 +423,14 @@ INSERT INTO `django_migrations` VALUES ('29', 'organization', '0003_merge', '201
 INSERT INTO `django_migrations` VALUES ('30', 'organization', '0004_auto_20170708_1003', '2017-07-08 10:03:37.436217');
 INSERT INTO `django_migrations` VALUES ('31', 'courses', '0004_course_course_org', '2017-07-09 14:20:00.552211');
 INSERT INTO `django_migrations` VALUES ('32', 'organization', '0005_teacher_image', '2017-07-10 21:45:50.053822');
+INSERT INTO `django_migrations` VALUES ('33', 'courses', '0005_course_category', '2017-07-15 14:56:44.308260');
+INSERT INTO `django_migrations` VALUES ('34', 'courses', '0006_course_tag', '2017-07-15 15:52:46.133040');
+INSERT INTO `django_migrations` VALUES ('35', 'courses', '0007_video_url', '2017-07-16 16:37:23.907559');
+INSERT INTO `django_migrations` VALUES ('36', 'courses', '0008_video_learn_time', '2017-07-16 17:36:13.707188');
+INSERT INTO `django_migrations` VALUES ('37', 'organization', '0006_remove_courseorg_course_nums', '2017-07-16 21:27:24.968729');
+INSERT INTO `django_migrations` VALUES ('38', 'organization', '0007_courseorg_course_nums', '2017-07-16 21:27:25.985760');
+INSERT INTO `django_migrations` VALUES ('39', 'courses', '0009_course_teacher', '2017-07-16 21:27:28.688365');
+INSERT INTO `django_migrations` VALUES ('40', 'courses', '0010_auto_20170716_2136', '2017-07-16 21:36:26.649116');
 
 -- ----------------------------
 -- Table structure for django_session
@@ -402,7 +447,7 @@ CREATE TABLE `django_session` (
 -- ----------------------------
 -- Records of django_session
 -- ----------------------------
-INSERT INTO `django_session` VALUES ('few1ctu1hw82o43rxwnej20pzmfaa96n', 'NTEyZmY2ZjZkYTJjODcyMzY1ZjAxMTgyMGQxYmU1MTE4NWYzNjBlYjp7Il9hdXRoX3VzZXJfYmFja2VuZCI6InVzZXJzLnZpZXdzLkN1c3RvbUJhY2tlbmQiLCJMSVNUX1FVRVJZIjpbWyJjb3Vyc2VzIiwiY291cnNlIl0sIiJdLCJfYXV0aF91c2VyX2hhc2giOiI5NmI2MmYyZmUyOGU0YTNjNDAwNTJhNjYyNTAyYWE2ZmI5MjgxMTk0IiwiX2F1dGhfdXNlcl9pZCI6IjEifQ==', '2017-07-26 22:12:09.182416');
+INSERT INTO `django_session` VALUES ('few1ctu1hw82o43rxwnej20pzmfaa96n', 'ZjlhMmIwYjMzM2M1OTcxZWZlZTUyNmZiZGNkOGU1YWM4MzdlYzI4MTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiTElTVF9RVUVSWSI6W1siY291cnNlcyIsImNvdXJzZSJdLCIiXSwiX2F1dGhfdXNlcl9oYXNoIjoiOTZiNjJmMmZlMjhlNGEzYzQwMDUyYTY2MjUwMmFhNmZiOTI4MTE5NCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6InVzZXJzLnZpZXdzLkN1c3RvbUJhY2tlbmQifQ==', '2017-07-30 21:39:14.048899');
 
 -- ----------------------------
 -- Table structure for operation_coursecomments
@@ -468,11 +513,12 @@ CREATE TABLE `operation_usercourse` (
   KEY `operation_usercourse_user_id_835fe81a_fk_users_userprofile_id` (`user_id`),
   CONSTRAINT `operation_usercourse_course_id_9f1eab2e_fk_courses_course_id` FOREIGN KEY (`course_id`) REFERENCES `courses_course` (`id`),
   CONSTRAINT `operation_usercourse_user_id_835fe81a_fk_users_userprofile_id` FOREIGN KEY (`user_id`) REFERENCES `users_userprofile` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of operation_usercourse
 -- ----------------------------
+INSERT INTO `operation_usercourse` VALUES ('1', '2017-07-15 15:09:00.000000', '1', '1');
 
 -- ----------------------------
 -- Table structure for operation_userfavorite
@@ -487,12 +533,14 @@ CREATE TABLE `operation_userfavorite` (
   PRIMARY KEY (`id`),
   KEY `operation_userfavorite_user_id_ad46a6af_fk_users_userprofile_id` (`user_id`),
   CONSTRAINT `operation_userfavorite_user_id_ad46a6af_fk_users_userprofile_id` FOREIGN KEY (`user_id`) REFERENCES `users_userprofile` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of operation_userfavorite
 -- ----------------------------
-INSERT INTO `operation_userfavorite` VALUES ('4', '1', '2', '2017-07-11 22:55:52.914211', '1');
+INSERT INTO `operation_userfavorite` VALUES ('9', '10', '1', '2017-07-16 11:16:33.282543', '1');
+INSERT INTO `operation_userfavorite` VALUES ('11', '1', '2', '2017-07-16 11:29:43.129169', '1');
+INSERT INTO `operation_userfavorite` VALUES ('12', '2', '2', '2017-07-16 14:44:53.571931', '1');
 
 -- ----------------------------
 -- Table structure for operation_usermessage
@@ -548,8 +596,8 @@ CREATE TABLE `organization_courseorg` (
   `add_time` datetime(6) NOT NULL,
   `city_id` int(11) NOT NULL,
   `category` varchar(20) NOT NULL,
-  `course_nums` int(11) NOT NULL,
   `study_nums` int(11) NOT NULL,
+  `course_nums` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `organization_course_city_id_4a842f85_fk_organization_citydict_id` (`city_id`),
   CONSTRAINT `organization_course_city_id_4a842f85_fk_organization_citydict_id` FOREIGN KEY (`city_id`) REFERENCES `organization_citydict` (`id`)
@@ -558,11 +606,11 @@ CREATE TABLE `organization_courseorg` (
 -- ----------------------------
 -- Records of organization_courseorg
 -- ----------------------------
-INSERT INTO `organization_courseorg` VALUES ('1', '慕课网', '慕课网是垂直的互联网IT技能免费学习网站。以独家视频教程、在线编程工具、学习计划、问答社区为核心特色。在这里，你可以找到最好的互联网技术牛人，也可以通过免费的在线公开视频课程学习国内领先的互联网IT技术。\r\n慕课网课程涵盖前端开发、PHP、Html5、Android、iOS、Swift等IT前沿技术语言，包括基础课程、实用案例、高级分享三大类型，适合不同阶段的学习人群。以纯干货、短视频的形式为平台特点，为在校学生、职场白领提供了一个迅速提升技能、共同分享进步的学习平台。[1] \r\n4月2日，国内首个IT技能学习类应用——慕课网3.1.0版本在应用宝首发。据了解，在此次上线的版本中，慕课网新增了课程历史记录、相关课程推荐等四大功能，为用户营造更加丰富的移动端IT学习体验。[2]', '0', '0', 'org/2017/07/imooc_logo_Q0F9kZP.jpg', '北京市', '2017-07-06 21:42:00.000000', '1', 'training', '10', '6');
-INSERT INTO `organization_courseorg` VALUES ('2', '麦子学院', '麦子学院，国内第一家在美国建立商务中心的IT在线教育机构，目前已与美国知名教育公司取得合作，未来将源源不断向国内输出大量高质量教育资源\r\n前身麦可网，2014年，麦可网完成千万级A轮融资，并更名为”麦子学院“，同时通过“麦子圈”IT职业实名社交圈——提供包括企业招聘对接，猎头，项目外包，经验分享，职业交友等一系列增值服务。\r\n做在线职业教育示范学院，将教育和课程做到极致。除了提供高质量的课程学习之外，也提供包括就业推荐，职业交友，项目外包，创业服务等全面的增值服务，并且线上线下结合，移动设备和传统网络相结合，打造IT职业教育的一个完整生态链。\r\n以高端IT技术型人才培养及服务为核心，探索及倡导技术交流创新模式。提供的不仅仅是技能培养，而是务实的职业导向。', '0', '0', 'org/2017/07/MaiZiEdu_logo_2s0kLgG.jpg', '成都市天府软件园D5', '2017-07-06 21:43:00.000000', '2', 'training', '9', '7');
-INSERT INTO `organization_courseorg` VALUES ('3', '极客学院', '极客学院[1]  是中国android开发在线学习平台，汇集了几十名国内顶尖的有多年项目和实战经验的Android开发授课大师，精心制作了上千个高质量视频教程，涵盖了Android开发学习的基础入门、中级进阶，高级提升、项目实战开发等专业的android开发课程。\r\n极客学院[2]  背后是一支疯狂喜欢编程，狂热开发移动app的超有活力团队。他们希望通过最新的，高质量的，专业实战的在线开发课程打破传统的编程学习模式，以新一代的编程学习模式帮助开发者更快更好的学习Android开发，帮助开发者通过技术实现自己的理想。\r\n作为国内最大IT职业在线教育平台，极客学院一直致力于“让学习更有效”，帮助IT从业者在最短的时间内获得最多的知识，技能得到最快的提升。目前，极客学院已拥有60多万IT从业者用户。', '0', '0', 'org/2017/07/jikexueyuan_logo_JlrN1nT.jpg', '上海', '2017-07-06 21:45:00.000000', '3', 'training', '8', '8');
-INSERT INTO `organization_courseorg` VALUES ('4', '成都东软学院', '成都东软学院（Chengdu Neusoft University）是经教育部批准成立的全日制普通本科院校，是四川省首批“卓越工程师教育培养试点高校”，国家紧缺型（信息类）人才培养基地，国家火炬计划成都数字娱乐产业化人才培训基地，国家数字媒体技术产业化人才培训基地，中国软件名城（成都）人才培养基地，四川省博士后创新实践基地，教育部应用科技大学改革试点高校。[1] \r\n成都东软学院前身是创建于2003年的成都东软信息职业技术学院，2011年5月18日升格为普通本科院校，学院更名为成都东软学院。[2-3] \r\n据2017年5月学院官网显示，学院地处成都市郊的世界文化遗产——都江堰-青城山风景区，占地面积近40万平方米，总建筑面积20万平方米[1]  ，图书馆舍馆藏文献56万多册，开设18个本科和4个专科IT、泛IT专业[4-5]  ，全日制在校生约1.1万人，留学生6名。[1]', '0', '0', 'org/2017/07/nsu_logo_SeEKBSq.jpg', '都江堰市青城山镇东软大道1号', '2017-07-06 21:46:00.000000', '2', 'university', '7', '9');
-INSERT INTO `organization_courseorg` VALUES ('5', '四川大学', '四川大学（Sichuan University），简称“川大”，由中华人民共和国教育部直属，中央直管副部级建制，位列“211工程”、“985工程”，入选“2011计划”、“珠峰计划”、“111计划”、“卓越工程师教育培养计划”、“海外高层次人才引进计划”，设有研究生院，拥有研究生自主划线资格，是一所综合性全国重点大学。\r\n四川大学由原四川大学、原成都科学技术大学、原华西医科大学三所全国重点大学经过两次合并而成。原四川大学起始于1896年四川总督鹿传霖奉光绪特旨创办的四川中西学堂，是西南地区最早的近代高等学校；原成都科学技术大学是新中国院系调整时组建的第一批多科型工科院校；原华西医科大学源于1910年由西方基督教会组织在成都创办的华西协合大学，是西南地区最早的西式大学和中国最早培养研究生的大学之一。1994年，原四川大学和原成都科技大学合并为四川联合大学，1998年更名为四川大学。2000年，四川大学与原华西医科大学合并，组建了新的四川大学。\r\n四川大学承文翁之教，聚群贤英才。百余年来，学校先后汇聚了历史学家顾颉刚、文学家李劼人、美学家朱光潜、物理学家吴大猷、植物学家方文培、卫生学家陈志潜、数学家柯召等大师。历史上，吴玉章、张澜曾执掌校务，共和国开国元勋朱德、共和国主席杨尚昆、文坛巨匠郭沫若、人民作家巴金、一代英烈江竹筠（江姐）等曾在川大求学。两院院士中，有50余位是川大校友；2001年评选的近代50位“四川文化名人”中，有36人是川大校友。[1]', '0', '0', 'org/2017/07/sicuan_logo_5CJdvFl.jpg', '武侯区一环路南一段24号', '2017-07-06 21:47:00.000000', '2', 'university', '6', '10');
+INSERT INTO `organization_courseorg` VALUES ('1', '慕课网', '慕课网是垂直的互联网IT技能免费学习网站。以独家视频教程、在线编程工具、学习计划、问答社区为核心特色。在这里，你可以找到最好的互联网技术牛人，也可以通过免费的在线公开视频课程学习国内领先的互联网IT技术。\r\n慕课网课程涵盖前端开发、PHP、Html5、Android、iOS、Swift等IT前沿技术语言，包括基础课程、实用案例、高级分享三大类型，适合不同阶段的学习人群。以纯干货、短视频的形式为平台特点，为在校学生、职场白领提供了一个迅速提升技能、共同分享进步的学习平台。[1] \r\n4月2日，国内首个IT技能学习类应用——慕课网3.1.0版本在应用宝首发。据了解，在此次上线的版本中，慕课网新增了课程历史记录、相关课程推荐等四大功能，为用户营造更加丰富的移动端IT学习体验。[2]', '0', '0', 'org/2017/07/imooc_logo_Q0F9kZP.jpg', '北京市', '2017-07-06 21:42:00.000000', '1', 'training', '6', '0');
+INSERT INTO `organization_courseorg` VALUES ('2', '麦子学院', '麦子学院，国内第一家在美国建立商务中心的IT在线教育机构，目前已与美国知名教育公司取得合作，未来将源源不断向国内输出大量高质量教育资源\r\n前身麦可网，2014年，麦可网完成千万级A轮融资，并更名为”麦子学院“，同时通过“麦子圈”IT职业实名社交圈——提供包括企业招聘对接，猎头，项目外包，经验分享，职业交友等一系列增值服务。\r\n做在线职业教育示范学院，将教育和课程做到极致。除了提供高质量的课程学习之外，也提供包括就业推荐，职业交友，项目外包，创业服务等全面的增值服务，并且线上线下结合，移动设备和传统网络相结合，打造IT职业教育的一个完整生态链。\r\n以高端IT技术型人才培养及服务为核心，探索及倡导技术交流创新模式。提供的不仅仅是技能培养，而是务实的职业导向。', '0', '0', 'org/2017/07/MaiZiEdu_logo_2s0kLgG.jpg', '成都市天府软件园D5', '2017-07-06 21:43:00.000000', '2', 'training', '7', '0');
+INSERT INTO `organization_courseorg` VALUES ('3', '极客学院', '极客学院[1]  是中国android开发在线学习平台，汇集了几十名国内顶尖的有多年项目和实战经验的Android开发授课大师，精心制作了上千个高质量视频教程，涵盖了Android开发学习的基础入门、中级进阶，高级提升、项目实战开发等专业的android开发课程。\r\n极客学院[2]  背后是一支疯狂喜欢编程，狂热开发移动app的超有活力团队。他们希望通过最新的，高质量的，专业实战的在线开发课程打破传统的编程学习模式，以新一代的编程学习模式帮助开发者更快更好的学习Android开发，帮助开发者通过技术实现自己的理想。\r\n作为国内最大IT职业在线教育平台，极客学院一直致力于“让学习更有效”，帮助IT从业者在最短的时间内获得最多的知识，技能得到最快的提升。目前，极客学院已拥有60多万IT从业者用户。', '0', '0', 'org/2017/07/jikexueyuan_logo_JlrN1nT.jpg', '上海', '2017-07-06 21:45:00.000000', '3', 'training', '8', '0');
+INSERT INTO `organization_courseorg` VALUES ('4', '成都东软学院', '成都东软学院（Chengdu Neusoft University）是经教育部批准成立的全日制普通本科院校，是四川省首批“卓越工程师教育培养试点高校”，国家紧缺型（信息类）人才培养基地，国家火炬计划成都数字娱乐产业化人才培训基地，国家数字媒体技术产业化人才培训基地，中国软件名城（成都）人才培养基地，四川省博士后创新实践基地，教育部应用科技大学改革试点高校。[1] \r\n成都东软学院前身是创建于2003年的成都东软信息职业技术学院，2011年5月18日升格为普通本科院校，学院更名为成都东软学院。[2-3] \r\n据2017年5月学院官网显示，学院地处成都市郊的世界文化遗产——都江堰-青城山风景区，占地面积近40万平方米，总建筑面积20万平方米[1]  ，图书馆舍馆藏文献56万多册，开设18个本科和4个专科IT、泛IT专业[4-5]  ，全日制在校生约1.1万人，留学生6名。[1]', '0', '0', 'org/2017/07/nsu_logo_SeEKBSq.jpg', '都江堰市青城山镇东软大道1号', '2017-07-06 21:46:00.000000', '2', 'university', '9', '0');
+INSERT INTO `organization_courseorg` VALUES ('5', '四川大学', '四川大学（Sichuan University），简称“川大”，由中华人民共和国教育部直属，中央直管副部级建制，位列“211工程”、“985工程”，入选“2011计划”、“珠峰计划”、“111计划”、“卓越工程师教育培养计划”、“海外高层次人才引进计划”，设有研究生院，拥有研究生自主划线资格，是一所综合性全国重点大学。\r\n四川大学由原四川大学、原成都科学技术大学、原华西医科大学三所全国重点大学经过两次合并而成。原四川大学起始于1896年四川总督鹿传霖奉光绪特旨创办的四川中西学堂，是西南地区最早的近代高等学校；原成都科学技术大学是新中国院系调整时组建的第一批多科型工科院校；原华西医科大学源于1910年由西方基督教会组织在成都创办的华西协合大学，是西南地区最早的西式大学和中国最早培养研究生的大学之一。1994年，原四川大学和原成都科技大学合并为四川联合大学，1998年更名为四川大学。2000年，四川大学与原华西医科大学合并，组建了新的四川大学。\r\n四川大学承文翁之教，聚群贤英才。百余年来，学校先后汇聚了历史学家顾颉刚、文学家李劼人、美学家朱光潜、物理学家吴大猷、植物学家方文培、卫生学家陈志潜、数学家柯召等大师。历史上，吴玉章、张澜曾执掌校务，共和国开国元勋朱德、共和国主席杨尚昆、文坛巨匠郭沫若、人民作家巴金、一代英烈江竹筠（江姐）等曾在川大求学。两院院士中，有50余位是川大校友；2001年评选的近代50位“四川文化名人”中，有36人是川大校友。[1]', '0', '0', 'org/2017/07/sicuan_logo_5CJdvFl.jpg', '武侯区一环路南一段24号', '2017-07-06 21:47:00.000000', '2', 'university', '10', '0');
 
 -- ----------------------------
 -- Table structure for organization_teacher
@@ -588,7 +636,7 @@ CREATE TABLE `organization_teacher` (
 -- ----------------------------
 -- Records of organization_teacher
 -- ----------------------------
-INSERT INTO `organization_teacher` VALUES ('1', 'gandazhi', '1', 'nsusoft', 'xxx', 'xxx', '0', '0', '2017-07-09 13:55:00.000000', '1', 'teacher/2017/07/3yi0vxlmqbr-26833.jpg');
+INSERT INTO `organization_teacher` VALUES ('1', 'gandazhi', '1', 'nsusoft', 'Python工程师', 'xxx', '0', '0', '2017-07-09 13:55:00.000000', '1', 'teacher/2017/07/3yi0vxlmqbr-26833.jpg');
 INSERT INTO `organization_teacher` VALUES ('2', 'gandazhi2', '1', 'xxx', 'xxx', 'xxx', '0', '0', '2017-07-10 22:52:00.000000', '1', 'teacher/2017/07/20151206180905_K4tYv.jpeg');
 
 -- ----------------------------
@@ -655,7 +703,7 @@ CREATE TABLE `users_userprofile` (
 -- ----------------------------
 -- Records of users_userprofile
 -- ----------------------------
-INSERT INTO `users_userprofile` VALUES ('1', 'pbkdf2_sha256$24000$u4bptrG8bI69$PRLD3Zdam8clGyR8N51ZjhptFpA0hg8ghAQ6Zp6EJHc=', '2017-07-11 23:17:51.181023', '1', 'gandazhi', '', '', 'gandazhi@gmail.com', '1', '1', '2017-07-06 21:16:13.507003', '', null, 'female', '', null, 'image/default.png');
+INSERT INTO `users_userprofile` VALUES ('1', 'pbkdf2_sha256$24000$u4bptrG8bI69$PRLD3Zdam8clGyR8N51ZjhptFpA0hg8ghAQ6Zp6EJHc=', '2017-07-11 23:17:00.000000', '1', 'gandazhi', '', '', 'gandazhi@gmail.com', '1', '1', '2017-07-06 21:16:00.000000', '干大志', null, 'male', '成都天府大道南段', '', 'image/2017/07/3yi0vxlmqbr-26833.jpg');
 
 -- ----------------------------
 -- Table structure for users_userprofile_groups
@@ -737,7 +785,7 @@ CREATE TABLE `xadmin_log` (
   KEY `xadmin_log_user_id_bb16a176_fk_users_userprofile_id` (`user_id`),
   CONSTRAINT `xadmin_log_content_type_id_2a6cb852_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `xadmin_log_user_id_bb16a176_fk_users_userprofile_id` FOREIGN KEY (`user_id`) REFERENCES `users_userprofile` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of xadmin_log
@@ -771,6 +819,44 @@ INSERT INTO `xadmin_log` VALUES ('26', '2017-07-12 22:07:28.747534', '127.0.0.1'
 INSERT INTO `xadmin_log` VALUES ('27', '2017-07-12 22:08:41.285829', '127.0.0.1', '8', 'AngularJS实战', 'create', '已添加', '9', '1');
 INSERT INTO `xadmin_log` VALUES ('28', '2017-07-12 22:10:19.214651', '127.0.0.1', '9', '手把手教你实现电商网站开发', 'create', '已添加', '9', '1');
 INSERT INTO `xadmin_log` VALUES ('29', '2017-07-12 22:12:08.958627', '127.0.0.1', '10', 'Spring MVC起步', 'create', '已添加', '9', '1');
+INSERT INTO `xadmin_log` VALUES ('30', '2017-07-15 14:47:03.085186', '127.0.0.1', '1', 'Lesson object', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('31', '2017-07-15 14:47:41.581741', '127.0.0.1', '2', '第二节', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('32', '2017-07-15 14:58:00.445046', '127.0.0.1', '10', 'Spring MVC起步', 'change', '已修改 category 。', '9', '1');
+INSERT INTO `xadmin_log` VALUES ('33', '2017-07-15 15:09:49.999877', '127.0.0.1', '1', 'UserCourse object', 'create', '已添加', '20', '1');
+INSERT INTO `xadmin_log` VALUES ('34', '2017-07-15 15:11:22.014545', '127.0.0.1', '1', 'gandazhi', 'change', '已修改 last_login，nick_name，gender，adders 和 image 。', '6', '1');
+INSERT INTO `xadmin_log` VALUES ('35', '2017-07-16 16:38:52.844652', '127.0.0.1', '3', '第一章MVC简介', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('36', '2017-07-16 16:39:13.996662', '127.0.0.1', '4', '第2章 Spring MVC中的基本概念', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('37', '2017-07-16 16:39:22.953248', '127.0.0.1', '5', '第3章 配置Maven环境', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('38', '2017-07-16 16:39:31.067493', '127.0.0.1', '6', '第4章 Spring MVC实操', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('39', '2017-07-16 16:39:39.618368', '127.0.0.1', '7', '第5章 总结', 'create', '已添加', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('40', '2017-07-16 16:39:45.399551', '127.0.0.1', '3', '第1章MVC简介', 'change', '已修改 name 。', '10', '1');
+INSERT INTO `xadmin_log` VALUES ('41', '2017-07-16 16:44:22.720936', '127.0.0.1', '1', 'Video object', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('42', '2017-07-16 16:44:51.886987', '127.0.0.1', '2', 'Video object', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('43', '2017-07-16 16:45:12.801263', '127.0.0.1', '3', 'Video object', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('44', '2017-07-16 16:46:26.697289', '127.0.0.1', '4', '2-1 Spring MVC的静态概念', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('45', '2017-07-16 16:48:52.618889', '127.0.0.1', '5', '2-2 Spring MVC的动态概念', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('46', '2017-07-16 16:49:29.531799', '127.0.0.1', '6', '3-1 Maven介绍', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('47', '2017-07-16 16:49:59.031881', '127.0.0.1', '7', '3-2 Maven的安装', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('48', '2017-07-16 16:50:23.972856', '127.0.0.1', '8', '3-3 Maven的配置', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('49', '2017-07-16 16:50:46.763007', '127.0.0.1', '9', '3-4 用Maven创建项目', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('50', '2017-07-16 16:51:15.687088', '127.0.0.1', '10', '3-5 Hello Spring MVC', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('51', '2017-07-16 16:51:46.540089', '127.0.0.1', '11', '4-1 从配置文件开始', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('52', '2017-07-16 16:52:12.766006', '127.0.0.1', '12', '4-2 Controller-基础代码', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('53', '2017-07-16 16:52:38.495009', '127.0.0.1', '13', '4-3 Controller-现代方式', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('54', '2017-07-16 16:53:00.129375', '127.0.0.1', '14', '4-4 Controller-传统方式', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('55', '2017-07-16 16:53:22.534923', '127.0.0.1', '15', '4-5 Binding', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('56', '2017-07-16 16:53:46.642862', '127.0.0.1', '16', '4-6 FileUpload--单文件上传', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('57', '2017-07-16 16:54:13.489529', '127.0.0.1', '17', '4-7 JSON（上）', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('58', '2017-07-16 16:54:31.263684', '127.0.0.1', '18', '4-8 JSON（中）', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('59', '2017-07-16 16:54:53.534747', '127.0.0.1', '19', '4-9 JSON（下）', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('60', '2017-07-16 16:55:23.238647', '127.0.0.1', '20', '总结', 'create', '已添加', '11', '1');
+INSERT INTO `xadmin_log` VALUES ('61', '2017-07-16 17:49:53.267362', '127.0.0.1', '1', 'CourseResource object', 'create', '已添加', '12', '1');
+INSERT INTO `xadmin_log` VALUES ('62', '2017-07-16 21:28:20.936493', '127.0.0.1', '10', 'Spring MVC起步', 'change', '已修改 teacher 和 tag 。', '9', '1');
+INSERT INTO `xadmin_log` VALUES ('63', '2017-07-16 21:32:44.488290', '127.0.0.1', '1', 'gandazhi', 'change', '已修改 work_position 。', '15', '1');
+INSERT INTO `xadmin_log` VALUES ('64', '2017-07-16 21:37:32.067087', '127.0.0.1', '10', 'Spring MVC起步', 'change', '已修改 you_need_know 和 teacher_tell 。', '9', '1');
+INSERT INTO `xadmin_log` VALUES ('65', '2017-07-16 21:38:46.544209', '127.0.0.1', '10', 'Spring MVC起步', 'change', '已修改 teacher_tell 。', '9', '1');
+INSERT INTO `xadmin_log` VALUES ('66', '2017-07-16 21:39:01.490653', '127.0.0.1', '10', 'Spring MVC起步', 'change', '已修改 teacher_tell 。', '9', '1');
+INSERT INTO `xadmin_log` VALUES ('67', '2017-07-16 21:39:13.761026', '127.0.0.1', '10', 'Spring MVC起步', 'change', '已修改 teacher_tell 。', '9', '1');
 
 -- ----------------------------
 -- Table structure for xadmin_usersettings
