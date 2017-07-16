@@ -4,6 +4,7 @@ from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Course
+from operation.models import UserFavorite
 
 
 # Create your views here.
@@ -41,11 +42,21 @@ class CourseDetail(View):
         """课程记录点击数"""
         course.click_num += 1
         course.save()
-
+        """判断用户是否已经收藏课程和授课机构"""
+        has_courseFav = False
+        has_orgFav = False
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user, fav_id=course.id, fav_type=1):
+                has_courseFav = True
+            if UserFavorite.objects.filter(user=request.user, fav_id=course.course_org.id, fav_type=2):
+                has_orgFav = True
         tag = course.tag
         if tag:
             relate_course = Course.objects.filter(tag=tag)[:1]
+            # if relate_course == course: 判断relate_course是否与当前课程相同，如果相同就再重新取一个
+            #     relate_course = relate_course
         else:
             relate_course = []
         return render(request, 'course-detail.html', {'course': course, 'current_page': current_page,
-                                                      'relate_course': relate_course})
+                                                      'relate_course': relate_course, 'has_courseFav': has_courseFav,
+                                                      'has_orgFav': has_orgFav})
