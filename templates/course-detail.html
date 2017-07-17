@@ -51,6 +51,7 @@
                                         <span class="pic"><img width="40" height="40"
                                                                src="
 
+
                                                                        {{ MEDIA_URL }}{{ user_course.user.image }}"/></span>
                                     {% endfor %}
                                 </li>
@@ -63,7 +64,8 @@
                                         收藏
                                     {% endif %}
                                 </div>
-                                <div class="buy btn"><a style="color: white" href="{% url 'course:course_info' course.id %}">开始学习</a></div>
+                                <div class="buy btn"><a style="color: white"
+                                                        href="{% url 'course:course_info' course.id %}">开始学习</a></div>
                             </div>
                         </div>
                         <div class="group-share-box">
@@ -147,25 +149,25 @@
                 </div>
                 {% for relate_courses in relate_course %}
                     <div class="right layout">
-                    <div class="head">相关课程推荐</div>
-                    <div class="group_recommend">
+                        <div class="head">相关课程推荐</div>
+                        <div class="group_recommend">
 
-                        <dl>
-                            <dt>
-                                <a target="_blank" href="">
-                                    <img width="240" height="220" class="scrollLoading"
-                                         src="{{ MEDIA_URL }}{{ relate_courses.image }}"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <a target="_blank" href=""><h2>{{ relate_courses.name }}</h2></a>
-                                <span class="fl">学习时长：<i class="key">{{ relate_courses.learn_time }}</i></span>
-                            </dd>
-                        </dl>
+                            <dl>
+                                <dt>
+                                    <a target="_blank" href="">
+                                        <img width="240" height="220" class="scrollLoading"
+                                             src="{{ MEDIA_URL }}{{ relate_courses.image }}"/>
+                                    </a>
+                                </dt>
+                                <dd>
+                                    <a target="_blank" href=""><h2>{{ relate_courses.name }}</h2></a>
+                                    <span class="fl">学习时长：<i class="key">{{ relate_courses.learn_time }}</i></span>
+                                </dd>
+                            </dl>
 
 
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>

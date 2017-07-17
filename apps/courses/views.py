@@ -1,6 +1,7 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
 from django.views.generic import View
+from django.db.models import Q
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Course, CourseResource
@@ -39,6 +40,7 @@ class CourseDetail(View):
     def get(self, request, course_id):
         current_page = 'course'
         course = Course.objects.get(id=int(course_id))
+        print course
         """课程记录点击数"""
         course.click_num += 1
         course.save()
@@ -53,8 +55,11 @@ class CourseDetail(View):
         tag = course.tag
         if tag:
             relate_course = Course.objects.filter(tag=tag)[:1]
-            # if relate_course == course: 判断relate_course是否与当前课程相同，如果相同就再重新取一个
-            #     relate_course = relate_course
+            for e in relate_course.all():  # 判断取出relate_course_id
+                relate_course_id = e.id
+                print relate_course
+                if relate_course_id == course.id:  # 判断relate_course.id是否与当前课程.id相同，如果相同就再重新取一个
+                    relate_course = Course.objects.filter(Q(tag=tag), ~Q(id=course_id))
         else:
             relate_course = []
         return render(request, 'course-detail.html', {'course': course, 'current_page': current_page,
