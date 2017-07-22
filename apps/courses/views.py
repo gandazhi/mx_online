@@ -6,7 +6,8 @@ from django.http import HttpResponse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Course, CourseResource
-from operation.models import UserFavorite, CourseComments
+from operation.models import UserFavorite, CourseComments, UserCourse
+from utils.mixin_utils import LoginRequiredMixin
 
 
 # Create your views here.
@@ -37,7 +38,7 @@ class CoursesListView(View):
                        'second_page': second_page})
 
 
-class CourseDetail(View):
+class CourseDetail(LoginRequiredMixin, View):
     def get(self, request, course_id):
         current_page = 'course'
         course = Course.objects.get(id=int(course_id))
@@ -66,15 +67,33 @@ class CourseDetail(View):
                                                       'has_orgFav': has_orgFav})
 
 
-class CourseInfoView(View):
+class CourseInfoView(LoginRequiredMixin, View):
     """课程章节信息"""
 
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
+        course.students += 1
+        course.save()
+        # 查询用户是否已经关联了该课程
+        user_courses = UserCourse.objects.filter(user=request.user, course=course)
+        if not user_courses:
+            user_course = UserCourse(user=request.user, course=course)
+            user_course.save()
+
+        # 先通过course_id找到有哪些用户学过这个课程，取出user_id，再根据这个user_id去取出这些id都学了哪些课，却出所有课程id，最后根据课程id筛选出课程
+        user_cousers = UserCourse.objects.filter(course=course)
+        user_id = [user_couser.user.id for user_couser in user_cousers]
+        # 取出所有学过该课程的用户学过其他什么课
+        all_user_courses = UserCourse.objects.filter(user_id__in=user_id)
+        # 取出所有课程id
+        course_id = [user_couser.course_id for user_couser in all_user_courses]
+        relate_courses = Course.objects.filter(id__in=course_id).order_by('-click_num')[:5]
+
         lesson = course.lesson_set.all()
         all_resources = CourseResource.objects.filter(course=course)
         return render(request, 'course-video.html',
-                      {'course': course, 'lesson': lesson, 'all_resources': all_resources})
+                      {'course': course, 'lesson': lesson, 'all_resources': all_resources,
+                       'relate_courses': relate_courses})
 
 
 class CommentsView(View):
