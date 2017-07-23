@@ -20,7 +20,7 @@ class CourseOrgAdmin(object):
 
 
 class TeacherAdmin(object):
-    list_display = ['org', 'name', 'work_years', 'work_company', 'work_position',
+    list_display = ['name', 'org',  'work_years', 'work_company', 'work_position',
                     'points', 'click_num', 'fav_num', 'add_time']
     search_fields = ['org', 'name', 'work_years', 'work_company', 'work_position',
                      'points', 'click_num', 'fav_num']
