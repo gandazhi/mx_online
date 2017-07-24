@@ -186,8 +186,13 @@ class TeacherListView(View):
 
     def get(self, request):
         current_page = 'teacher'
+        tag = ''
         teacher = Teacher.objects.all()
 
+        sort = request.GET.get('sort', '')
+        if sort == 'hot':
+            teacher = teacher.order_by('-click_num')
+            tag = 'hot'
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
@@ -197,7 +202,7 @@ class TeacherListView(View):
 
         teacher_nums = teacher.count()
 
-        hot_teacher = teacher.order_by('-click_num')[:3]
+        ranking_teacher = teacher.order_by('-fav_num')[:3]
         return render(request, 'teachers-list.html',
-                      {'teacher_list': teacher_list, 'hot_teacher': hot_teacher, 'current_page': current_page,
-                       'teacher_nums': teacher_nums})
+                      {'teacher_list': teacher_list, 'current_page': current_page,
+                       'teacher_nums': teacher_nums, 'ranking_teacher': ranking_teacher, 'tag': tag})
