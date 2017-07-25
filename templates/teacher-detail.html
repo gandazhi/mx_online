@@ -29,7 +29,11 @@
                             </div>
                             <div class="btn">
                                 <span class="fl btn1 collectionbtn" id="jsLeftBtn">
-                                     收藏
+                                     {% if has_teacher_fav %}
+                                         已收藏
+                                     {% else %}
+                                         收藏
+                                     {% endif %}
                                 </span>
                                 <span class="fr btn2 shareBtn bdsharebuttonbox"
                                       data-text="授课教师-李老师-慕学网"
@@ -43,7 +47,7 @@
                             </dt>
                             <dd>
                                 <a href="/diary/hk_detail/10/">
-                                    <h1>bobby<span class="key picbig">金牌讲师</span></h1>
+                                    <h1>{{ teacher.name }}<span class="key picbig">金牌讲师</span></h1>
                                 </a>
                                 <ul class="cont">
                                     <li>工作年限：<span>{{ teacher.work_years }}</span></li>
@@ -107,7 +111,12 @@
                             <h2 class="center">{{ teacher.org }}</h2>
                         </a>
                         <p class="center tell">地址：{{ teacher.org.address }}</p>
-                        <a class="btn" id="jsRightBtn">收藏</a>
+                        <a class="btn" id="jsRightBtn">
+                            {% if has_org_fav %}
+                                已收藏
+                            {% else %}
+                                收藏
+                            {% endif %}</a>
                     </div>
                 </div>
                 <div class="butler_detail_cont">
@@ -146,16 +155,16 @@
             $.ajax({
                 cache: false,
                 type: "POST",
-                url: "/org/add_fav/",
+                url: "{% url 'org:add_fav' %}",
                 data: {'fav_id': fav_id, 'fav_type': fav_type},
                 async: true,
                 beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
                 },
                 success: function (data) {
                     if (data.status == 'fail') {
                         if (data.msg == '用户未登录') {
-                            window.location.href = "login.html";
+                            window.location.href = "{% url 'index' %}";
                         } else {
                             alert(data.msg)
                         }
