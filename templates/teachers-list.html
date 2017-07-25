@@ -20,8 +20,8 @@
                 <div class="butler_list layout">
                     <div class="head">
                         <ul class="fl tab_header">
-                            <li class="{% ifequal tag '' %}active{% endifequal %}"><a href="?sort=">全部</a></li>
-                            <li class="{% ifequal tag 'hot' %}active{% endifequal %}"><a href="?sort=hot">人气 &#8595;</a></li>
+                            <li {% ifequal tag '' %}class="active"{% endifequal %}><a href="?sort=">全部</a></li>
+                            <li {% ifequal tag 'hot' %}class="active"{% endifequal %}><a href="?sort=hot">人气 &#8595;</a></li>
                         </ul>
                         <div class="fr butler-num">共<span class="key">{{ teacher_nums }}</span>人&nbsp;&nbsp;&nbsp;
                         </div>
@@ -30,7 +30,7 @@
                     {% for teacher in teacher_list.object_list %}
                         <dl class="des">
                             <dt>
-                                <a href="/org/teacher/detail/1/">
+                                <a href="{% url 'org:teacher_detail' teacher.id %}">
                                     <div class="picpic">
                                         <img width="100" height="100" class="scrollLoading"
                                              src="{{ MEDIA_URL }}{{ teacher.image }}"/>
@@ -48,7 +48,7 @@
                             </div>
                             </dt>
                             <dd>
-                                <a href="/org/teacher/detail/1/">
+                                <a href="{% url 'org:teacher_detail' teacher.id %}">
                                     <h1>{{ teacher.name }}<span class="key picbig">金牌讲师</span></h1>
                                 </a>
                                 <ul class="cont">
@@ -59,7 +59,7 @@
                                     <li>教学特点：<span>{{ teacher.points }}</span></li>
                                 </ul>
                             </dd>
-                            <a class="buy buyservice" href="/org/teacher/detail/1/"><br/>查看<br/>详情</a>
+                            <a class="buy buyservice" href="{% url 'org:teacher_detail' teacher.id %}"><br/>查看<br/>详情</a>
                         </dl>
                     {% endfor %}
 

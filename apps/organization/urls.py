@@ -3,7 +3,7 @@
 from django.conf.urls import url, include
 
 from .views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeachersView, AddFavView, \
-    TeacherListView
+    TeacherListView, TeacherDetailView
 
 __author__ = 'gandazhi'
 __date__ = '17-7-8 下午7:41'
@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^teachers/(?P<org_id>\d+)/$', OrgTeachersView.as_view(), name='org_teachers'),
     # 收藏机构和取消收藏机构
     url(r'^add_fav/$', AddFavView.as_view(), name='add_fav'),
-    # 讲师列表也
+    # 讲师列表页
     url(r'^teacher/list/$', TeacherListView.as_view(), name='teacher_list'),
+    # 讲师详情页
+    url(r'^teachers/detail(?P<teacher_id>\d+)/$', TeacherDetailView.as_view(), name='teacher_detail'),
 ]

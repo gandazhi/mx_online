@@ -197,7 +197,7 @@ class TeacherListView(View):
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
-        p = Paginator(teacher, 1, request=request)
+        p = Paginator(teacher, 2, request=request)
         teacher_list = p.page(page)
 
         teacher_nums = teacher.count()
@@ -206,3 +206,14 @@ class TeacherListView(View):
         return render(request, 'teachers-list.html',
                       {'teacher_list': teacher_list, 'current_page': current_page,
                        'teacher_nums': teacher_nums, 'ranking_teacher': ranking_teacher, 'tag': tag})
+
+
+class TeacherDetailView(View):
+    def get(self, request, teacher_id):
+        current_page = 'teacher'
+        teacher = Teacher.objects.get(id=int(teacher_id))
+        all_courses = Course.objects.filter(teacher=teacher)
+        ranking_teacher = Teacher.objects.all().order_by('-fav_num')[:3]
+        return render(request, 'teacher-detail.html',
+                      {'teacher': teacher, 'all_courses': all_courses, 'ranking_teacher': ranking_teacher,
+                       'current_page': current_page})
