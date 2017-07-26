@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^home/(?P<org_id>\d+)/$', OrgHomeView.as_view(), name='org_home'),
     url(r'^course/(?P<org_id>\d+)/$', OrgCourseView.as_view(), name='org_course'),
     url(r'^desc/(?P<org_id>\d+)/$', OrgDescView.as_view(), name='org_desc'),
-    url(r'^teachers/(?P<org_id>\d+)/$', OrgTeachersView.as_view(), name='org_teachers'),
+    url(r'^org_teachers/(?P<org_id>\d+)/$', OrgTeachersView.as_view(), name='org_teachers'),
     # 收藏机构和取消收藏机构
     url(r'^add_fav/$', AddFavView.as_view(), name='add_fav'),
     # 讲师列表页
