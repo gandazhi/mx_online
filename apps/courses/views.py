@@ -19,6 +19,12 @@ class CoursesListView(View):
         second_page = ''
         hot_course = Course.objects.all().order_by('-click_num')[:3]
 
+        # 课程搜索
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            course = course.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords) | Q(
+                detail__icontains=search_keywords))
+
         sort = request.GET.get('sort', '')
         if sort == 'hot':
             course = course.order_by('-click_num')
