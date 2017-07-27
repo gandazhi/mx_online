@@ -49,15 +49,13 @@ class OrgView(View):
         orgs = p.page(page)
 
         org_nums = all_orgs.count()
-        current_page = 'org'
         return render(request, 'org-list.html', {'all_orgs': orgs,
                                                  'all_citys': all_citys,
                                                  'org_nums': org_nums,
                                                  'city_id': city_id,
                                                  'category': ct,
                                                  'hot_orgs': hot_orgs,
-                                                 'sort': sort,
-                                                 'current_page': current_page})
+                                                 'sort': sort})
 
 
 class AddUserAskView(View):
@@ -77,7 +75,6 @@ class AddUserAskView(View):
 
 class OrgHomeView(View):
     def get(self, request, org_id):
-        current_page = 'home'
         course_org = CourseOrg.objects.get(id=int(org_id))
         has_fav = False
         if request.user.is_authenticated():
@@ -89,7 +86,6 @@ class OrgHomeView(View):
         return render(request, 'org-detail-homepage.html', {'all_courses': all_courses,
                                                             'all_teachers': all_teachers,
                                                             'course_org': course_org,
-                                                            'current_page': current_page,
                                                             'has_fav': has_fav})
 
 
@@ -99,7 +95,6 @@ class OrgCourseView(View):
     """
 
     def get(self, request, org_id):
-        current_page = 'course'
         course_org = CourseOrg.objects.get(id=int(org_id))
         has_fav = False
         if request.user.is_authenticated():
@@ -108,7 +103,6 @@ class OrgCourseView(View):
         all_courses = course_org.course_set.all()
         return render(request, 'org-detail-course.html', {'all_courses': all_courses,
                                                           'course_org': course_org,
-                                                          'current_page': current_page,
                                                           'has_fav': has_fav})
 
 
@@ -135,7 +129,6 @@ class OrgTeachersView(View):
     """
 
     def get(self, request, org_id):
-        current_page = 'teachers'
         course_org = CourseOrg.objects.get(id=int(org_id))
         has_fav = False
         if request.user.is_authenticated():
@@ -145,7 +138,6 @@ class OrgTeachersView(View):
 
         return render(request, 'org-detail-teachers.html', {'all_teachers': all_teachers,
                                                             'course_org': course_org,
-                                                            'current_page': current_page,
                                                             'has_fav': has_fav})
 
 
@@ -185,7 +177,6 @@ class TeacherListView(View):
     """
 
     def get(self, request):
-        current_page = 'teacher'
         tag = ''
         teacher = Teacher.objects.all()
 
@@ -204,13 +195,12 @@ class TeacherListView(View):
 
         ranking_teacher = teacher.order_by('-fav_num')[:3]
         return render(request, 'teachers-list.html',
-                      {'teacher_list': teacher_list, 'current_page': current_page,
-                       'teacher_nums': teacher_nums, 'ranking_teacher': ranking_teacher, 'tag': tag})
+                      {'teacher_list': teacher_list, 'teacher_nums': teacher_nums, 'ranking_teacher': ranking_teacher,
+                       'tag': tag})
 
 
 class TeacherDetailView(View):
     def get(self, request, teacher_id):
-        current_page = 'teacher'
         teacher = Teacher.objects.get(id=int(teacher_id))
         all_courses = Course.objects.filter(teacher=teacher)
         ranking_teacher = Teacher.objects.all().order_by('-fav_num')[:3]
@@ -223,4 +213,4 @@ class TeacherDetailView(View):
                 has_org_fav = True
         return render(request, 'teacher-detail.html',
                       {'teacher': teacher, 'all_courses': all_courses, 'ranking_teacher': ranking_teacher,
-                       'current_page': current_page, 'has_teacher_fav': has_teacher_fav, 'has_org_fav': has_org_fav})
+                       'has_teacher_fav': has_teacher_fav, 'has_org_fav': has_org_fav})

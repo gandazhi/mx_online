@@ -16,7 +16,6 @@ from utils.mixin_utils import LoginRequiredMixin
 class CoursesListView(View):
     def get(self, request):
         course = Course.objects.all().order_by('-add_time')
-        current_page = 'course'
         second_page = ''
         hot_course = Course.objects.all().order_by('-click_num')[:3]
 
@@ -34,13 +33,12 @@ class CoursesListView(View):
         p = Paginator(course, 6, request=request)
         course_list = p.page(page)
         return render(request, 'course-list.html',
-                      {'current_page': current_page, 'hot_course': hot_course, 'course_list': course_list,
+                      {'hot_course': hot_course, 'course_list': course_list,
                        'second_page': second_page})
 
 
 class CourseDetail(LoginRequiredMixin, View):
     def get(self, request, course_id):
-        current_page = 'course'
         course = Course.objects.get(id=int(course_id))
         # 判断学习状态，已经有学习记录的就显示继续学习，没有记录的就显示开始学习
         user_courses = UserCourse.objects.filter(user=request.user, course=course)
@@ -68,16 +66,15 @@ class CourseDetail(LoginRequiredMixin, View):
                     relate_course = Course.objects.filter(Q(tag=tag), ~Q(id=course_id))
         else:
             relate_course = []
-        return render(request, 'course-detail.html', {'course': course, 'current_page': current_page,
-                                                      'relate_course': relate_course, 'has_courseFav': has_courseFav,
-                                                      'has_orgFav': has_orgFav, 'learn_state': learn_state})
+        return render(request, 'course-detail.html',
+                      {'course': course, 'relate_course': relate_course, 'has_courseFav': has_courseFav,
+                       'has_orgFav': has_orgFav, 'learn_state': learn_state})
 
 
 class CourseInfoView(LoginRequiredMixin, View):
     """课程章节信息"""
 
     def get(self, request, course_id):
-        current_page = 'course'
         course = Course.objects.get(id=int(course_id))
 
         # 查询用户是否已经关联了该课程
@@ -101,18 +98,16 @@ class CourseInfoView(LoginRequiredMixin, View):
         all_resources = CourseResource.objects.filter(course=course)
         return render(request, 'course-video.html',
                       {'course': course, 'lesson': lesson, 'all_resources': all_resources,
-                       'relate_courses': relate_courses, 'current_page': current_page})
+                       'relate_courses': relate_courses, })
 
 
 class CommentsView(View):
     def get(self, request, course_id):
-        current_page = 'course'
         course = Course.objects.get(id=int(course_id))
         all_resources = CourseResource.objects.filter(course=course)
         all_comments = CourseComments.objects.filter(course=course)
         return render(request, 'course-comment.html',
-                      {'course': course, 'all_resources': all_resources, 'all_comments': all_comments,
-                       'current_page': current_page})
+                      {'course': course, 'all_resources': all_resources, 'all_comments': all_comments})
 
 
 class AddCommentsView(View):
@@ -139,7 +134,6 @@ class AddCommentsView(View):
 
 class VideoPlayView(View):
     def get(self, request, video_id):
-        current_page = 'course'
         video = Video.objects.get(id=int(video_id))
         course = video.lesson.course
 
@@ -164,4 +158,4 @@ class VideoPlayView(View):
         all_resources = CourseResource.objects.filter(course=course)
         return render(request, 'course-play.html',
                       {'course': course, 'lesson': lesson, 'all_resources': all_resources,
-                       'relate_courses': relate_courses, 'video': video, 'current_page': current_page})
+                       'relate_courses': relate_courses, 'video': video})
