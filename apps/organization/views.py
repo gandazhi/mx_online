@@ -54,13 +54,9 @@ class OrgView(View):
         orgs = p.page(page)
 
         org_nums = all_orgs.count()
-        return render(request, 'org-list.html', {'all_orgs': orgs,
-                                                 'all_citys': all_citys,
-                                                 'org_nums': org_nums,
-                                                 'city_id': city_id,
-                                                 'category': ct,
-                                                 'hot_orgs': hot_orgs,
-                                                 'sort': sort})
+        return render(request, 'org-list.html',
+                      {'all_orgs': orgs, 'all_citys': all_citys, 'org_nums': org_nums, 'city_id': city_id,
+                       'category': ct, 'hot_orgs': hot_orgs, 'sort': sort, 'search_keywords': search_keywords})
 
 
 class AddUserAskView(View):
@@ -207,7 +203,7 @@ class TeacherListView(View):
 
         return render(request, 'teachers-list.html',
                       {'teacher_list': teacher_list, 'teacher_nums': teacher_nums, 'ranking_teacher': ranking_teacher,
-                       'tag': tag})
+                       'tag': tag, 'search_keywords': search_keywords})
 
 
 class TeacherDetailView(View):

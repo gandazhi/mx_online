@@ -24,13 +24,13 @@
                                 <a href="?city={{ city_id }}"><span
                                         class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
 
-                                <a href="?ct=training&city={{ city_id }}"><span
+                                <a href="?ct=training&city={{ city_id }}&keywords={{ search_keywords }}"><span
                                         class="{% ifequal category 'training' %}active2{% endifequal %}">培训机构</span></a>
 
-                                <a href="?ct=university&city={{ city_id }}"><span
+                                <a href="?ct=university&city={{ city_id }}&keywords={{ search_keywords }}"><span
                                         class="{% ifequal category 'university' %}active2{% endifequal %}">高校</span></a>
 
-                                <a href="?ct=personal&city={{ city_id }}"><span
+                                <a href="?ct=personal&city={{ city_id }}&keywords={{ search_keywords }}"><span
                                         class="{% ifequal category 'personal' %}active2{% endifequal %}">个人</span></a>
 
                             </div>
@@ -57,10 +57,10 @@
                                 <li class="{% if sort == '' %}active{% endif %}"><a
                                         href="?ct={{ category }}&city={{ city_id }}">全部</a></li>
                                 <li class="{% if sort == 'study_nums' %}active{% endif %}"><a
-                                        href="?sort=study_nums&ct={{ category }}&city={{ city_id }}">学习人数 &#8595;</a>
+                                        href="?sort=study_nums&ct={{ category }}&city={{ city_id }}&keywords={{ search_keywords }}">学习人数 &#8595;</a>
                                 </li>
                                 <li class="{% if sort == 'course_nums' %}active{% endif %}"><a
-                                        href="?sort=course_nums&ct={{ category }}&city={{ city_id }}">课程数 &#8595;</a>
+                                        href="?sort=course_nums&ct={{ category }}&city={{ city_id }}&keywords={{ search_keywords }}">课程数 &#8595;</a>
                                 </li>
                             </ul>
                         </div>

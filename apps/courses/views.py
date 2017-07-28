@@ -40,7 +40,7 @@ class CoursesListView(View):
         course_list = p.page(page)
         return render(request, 'course-list.html',
                       {'hot_course': hot_course, 'course_list': course_list,
-                       'second_page': second_page})
+                       'second_page': second_page, 'search_keywords': search_keywords})
 
 
 class CourseDetail(LoginRequiredMixin, View):
