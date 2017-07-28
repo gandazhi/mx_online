@@ -61,6 +61,7 @@
                                 {% if request.path|slice:'9' == '/org/list' %}课程机构{% endif %}
                                 {% if request.path|slice:'17' == '/org/teacher/list' %}授课老师{% endif %}
                                 {% if request.path|slice:'12' == '/course/list' %}公开课{% endif %}
+                                {% if request.path == '/' %}公开课{% endif %}
                             </span>
                             <ul class="selectMenu" id="jsSelectMenu">
                                 <li data-value="course">公开课</li>
