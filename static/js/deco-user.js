@@ -86,7 +86,7 @@ $(function(){
             cache: false,
             type: "POST",
             dataType:'json',
-            url:"/users/update/pwd/",
+            url:"/users/update/password/",
             data:$('#jsResetPwdForm').serialize(),
             async: true,
             success: function(data) {
@@ -95,6 +95,7 @@ $(function(){
                 }else if(data.password2){
                     Dml.fun.showValidateError($("#repwd"), data.password2);
                 }else if(data.status == "success"){
+                    alert(2);
                     Dml.fun.showTipsDialog({
                         title:'提交成功',
                         h2:'修改密码成功，请重新登录!',

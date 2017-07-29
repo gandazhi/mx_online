@@ -1,5 +1,7 @@
 # _*_ coding:utf-8 _*_
-from django.http import HttpResponseRedirect
+import json
+
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
@@ -9,8 +11,10 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile, EmailVerifyRecord
-from forms import LoginForm, RegisterForm, ForgetPwdFrom, ModifyPwdFrom
+from forms import LoginForm, RegisterForm, ForgetPwdFrom, ModifyPwdFrom, UploadImageFrom
 from utils.email_send import send_email
+from utils.mixin_utils import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -61,7 +65,7 @@ class ForgetPwdView(View):
                 send_email(email, 'forget')
                 return render(request, 'send_success.html')
             else:
-                return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': u'这个没有邮箱注册' })
+                return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd, 'msg': u'这个没有邮箱注册'})
         else:
             # return render(request, 'login.html')
             return render(request, 'forgetpwd.html', {'forget_pwd': forget_pwd})
@@ -150,3 +154,38 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse("index"))
+
+
+class UserInfoView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'usercenter-info.html')
+
+
+class UploadImageView(LoginRequiredMixin, View):
+    def post(self, request):
+        image_from = UploadImageFrom(request.POST, request.FILES, instance=request.user)
+        if image_from.is_valid():
+            image_from.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status": "fail"}', content_type='application/json')
+
+
+class UpdatePwdView(LoginRequiredMixin, View):
+    """
+    个人中心修改密码
+    """
+    def post(self, request):
+        modify_from = ModifyPwdFrom(request.POST)
+        if modify_from.is_valid():
+            new_password = request.POST.get('password', '')
+            confirm_password = request.POST.get('password2', '')
+            if new_password == confirm_password:
+                user = request.user
+                user.password = make_password(confirm_password)
+                user.save()
+                return HttpResponse('{"status": "success", "msg": "修改密码成功"}', content_type='application/json')
+            else:
+                return HttpResponse('{"status": "fail", "msg": "两次密码输入不一致"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(modify_from.errors), content_type='application/json')
