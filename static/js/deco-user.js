@@ -12,7 +12,7 @@ function sendCodeChangeEmail($btn){
         cache: false,
         type: "get",
         dataType:'json',
-        url:"/users/sendemail_code/",
+        url:"/users/send_email_code/",
         data:$('#jsChangeEmailForm').serialize(),
         async: true,
         beforeSend:function(XMLHttpRequest){
@@ -95,7 +95,6 @@ $(function(){
                 }else if(data.password2){
                     Dml.fun.showValidateError($("#repwd"), data.password2);
                 }else if(data.status == "success"){
-                    alert(2);
                     Dml.fun.showTipsDialog({
                         title:'提交成功',
                         h2:'修改密码成功，请重新登录!',
@@ -172,9 +171,9 @@ $(function(){
                 if(data.nick_name){
                     _showValidateError($('#nick_name'), data.nick_name);
                 }else if(data.birday){
-                   _showValidateError($('#birth_day'), data.birday);
+                   _showValidateError($('#birth_day'), data.birthday);
                 }else if(data.address){
-                   _showValidateError($('#address'), data.address);
+                   _showValidateError($('#adders'), data.adders);
                 }else if(data.status == "failure"){
                      Dml.fun.showTipsDialog({
                         title: '保存失败',

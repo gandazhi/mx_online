@@ -585,7 +585,8 @@ caption {
     right: 0;
     bottom: 0;
     left: 0;
-    overflow: auto;
+    margin: 0 auto;
+    overflow: hidden;
     display: none;
     z-index: 9999;
 }

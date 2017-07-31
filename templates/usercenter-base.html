@@ -185,7 +185,7 @@
 <!--sidebar end-->
 <!--header start-->
 
-<div class="dialog" id="jsDialog">
+<div class="dialog" id="jsDialog" style="width: 500px; height: 500px;">
     <div class="successbox dialogbox" id="jsSuccessTips">
         <h1>成功提交</h1>
         <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
@@ -245,8 +245,7 @@
             <div class="button">
                 <input class="changeemai_btn" id="jsChangeEmailBtn" type="button" value="完成"/>
             </div>
-            <input type='hidden' name='csrfmiddlewaretoken' value='DaP7IUKm9FA9nELA9YUlYYWpyIDdCiIP'/>
-            <input type='hidden' name='csrfmiddlewaretoken' value='799Y6iPeEDNSGvrTu3noBrO4MBLv6enY'/>
+            {% csrf_token %}
         </form>
     </div>
 
@@ -316,7 +315,7 @@
         </div>
     </div>
 </div>
-<div class="bg" id="dialogBg"></div>
+<div class="bg" id="dialogBg" ></div>
 
 
 <script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
