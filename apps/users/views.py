@@ -11,6 +11,7 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile, EmailVerifyRecord
+from operation.models import UserCourse
 from forms import LoginForm, RegisterForm, ForgetPwdFrom, ModifyPwdFrom, UploadImageFrom, UserInfoFrom
 from utils.email_send import send_email
 from utils.mixin_utils import LoginRequiredMixin
@@ -160,6 +161,7 @@ class UserInfoView(LoginRequiredMixin, View):
     """
     用户个人中心
     """
+
     def get(self, request):
         return render(request, 'usercenter-info.html')
 
@@ -176,6 +178,7 @@ class UploadImageView(LoginRequiredMixin, View):
     """
     个人中心修改头像
     """
+
     def post(self, request):
         image_from = UploadImageFrom(request.POST, request.FILES, instance=request.user)
         if image_from.is_valid():
@@ -210,6 +213,7 @@ class SendEmailCodeView(LoginRequiredMixin, View):
     """
     修改邮箱收验证码
     """
+
     def get(self, request):
         email = request.GET.get('email', '')
         if UserProfile.objects.filter(email=email):
@@ -236,3 +240,13 @@ class UpdateEmailView(LoginRequiredMixin, View):
             return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
             return HttpResponse('{"email":"验证码出错"}', content_type='application/json')
+
+
+class MyCourseView(LoginRequiredMixin, View):
+    """
+    我的课程
+    """
+
+    def get(self, request):
+        user_course = UserCourse.objects.filter(user=request.user)
+        return render(request, 'usercenter-mycourse.html', {'user_courses': user_course})
