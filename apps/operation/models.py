@@ -7,6 +7,7 @@ from django.db import models
 from users.models import UserProfile
 from courses.models import Course
 
+
 # Create your models here.
 
 
@@ -59,6 +60,9 @@ class UserMessage(models.Model):
         verbose_name = u'用户消息'
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return self.message
+
 
 class UserCourse(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户')
@@ -67,4 +71,4 @@ class UserCourse(models.Model):
 
     class Meta:
         verbose_name = u'用户课程'
-        verbose_name_plural = verbose_name  
+        verbose_name_plural = verbose_name

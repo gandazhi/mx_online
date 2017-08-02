@@ -9,9 +9,10 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import UserProfile, EmailVerifyRecord
-from operation.models import UserCourse, UserFavorite
+from operation.models import UserCourse, UserFavorite, UserMessage
 from organization.models import CourseOrg, Teacher
 from courses.models import Course
 from forms import LoginForm, RegisterForm, ForgetPwdFrom, ModifyPwdFrom, UploadImageFrom, UserInfoFrom
@@ -111,6 +112,12 @@ class RegisterView(View):
                 user_profile.password = make_password(pass_word)
                 user_profile.is_active = False
                 user_profile.save()
+
+                # 写如欢迎注册消息
+                user_message = UserMessage()
+                user_message.user = user_profile.id
+                user_message.message = '欢迎注册本网站'
+                user_message.save()
 
                 send_email(user_name, 'register')
                 return render(request, 'login.html')
@@ -256,7 +263,15 @@ class MyCourseView(LoginRequiredMixin, View):
 
 class MessageView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'usercenter-message.html', {})
+        messages = UserMessage.objects.filter(user=request.user.id)
+
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        p = Paginator(messages, 5, request=request)
+        message = p.page(page)
+        return render(request, 'usercenter-message.html', {'message': message})
 
 
 class FavOrgView(LoginRequiredMixin, View):

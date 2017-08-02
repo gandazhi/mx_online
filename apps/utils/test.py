@@ -5,6 +5,6 @@
 __author__ = 'gandazhi'
 __date__ = '17-7-28 下午1:57'
 
-s = 'update_email'
+s = '/users/message'
 print len(s)
-print u'0x7ff4a4a40cd0'
+
