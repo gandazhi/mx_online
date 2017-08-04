@@ -77,6 +77,8 @@ class AddUserAskView(View):
 class OrgHomeView(View):
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org.click_num += 1
+        course_org.save()
         has_fav = False
         if request.user.is_authenticated():
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
@@ -156,13 +158,47 @@ class AddFavView(View):
 
         exist_records = UserFavorite.objects.filter(user=request.user, fav_id=int(fav_id), fav_type=int(fav_type))
         if exist_records:
+            # 对course_org,course,teacher表中的fav_num进行操作
+            if int(fav_type) == 2:
+                course_org = CourseOrg.objects.get(id=int(fav_id))
+                course_org.fav_num -= 1
+                if course_org.fav_num < 0:
+                    course_org.fav_num = 0
+                course_org.save()
+            elif int(fav_type) == 1:
+                course = Course.objects.get(id=int(fav_id))
+                course.fav_num -= 1
+                if course.fav_num < 0:
+                    course.fav_num = 0
+                course.save()
+            elif int(fav_type) == 3:
+                teacher = Teacher.objects.get(id=int(fav_id))
+                teacher.fav_num -= 1
+                if teacher.fav_num < 0:
+                    teacher.fav_num = 0
+                teacher.save()
+
             # 如果记录已经存在，就删除该记录，取消收藏
             exist_records.delete()
             return HttpResponse('{"status":"success","msg":"收藏"}', content_type='application/json')
         else:
             # 否则就加入收藏信息，收藏该机构
             user_fav = UserFavorite()
+            # 对course_org,course,teacher表中的fav_num进行操作
             if int(fav_id) > 0 and int(fav_type) > 0:
+                if int(fav_type) == 2:
+                    course_org = CourseOrg.objects.get(id=int(fav_id))
+                    course_org.fav_num += 1
+                    course_org.save()
+                elif int(fav_type) == 1:
+                    course = Course.objects.get(id=int(fav_id))
+                    course.fav_num += 1
+                    course.save()
+                elif int(fav_type) == 3:
+                    teacher = Teacher.objects.get(id=int(fav_id))
+                    teacher.fav_num += 1
+                    teacher.save()
+
                 user_fav.fav_id = int(fav_id)
                 user_fav.fav_type = int(fav_type)
                 user_fav.user = request.user
@@ -209,6 +245,8 @@ class TeacherListView(View):
 class TeacherDetailView(View):
     def get(self, request, teacher_id):
         teacher = Teacher.objects.get(id=int(teacher_id))
+        teacher.click_num += 1
+        teacher.save()
         all_courses = Course.objects.filter(teacher=teacher)
         ranking_teacher = Teacher.objects.all().order_by('-fav_num')[:3]
         has_teacher_fav = False

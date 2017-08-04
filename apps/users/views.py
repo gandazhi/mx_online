@@ -150,10 +150,10 @@ class LoginView(View):
 
 
 class CustomBackend(ModelBackend):
-    # 添加使用邮箱登录和使用用户名登录，重写authenticate()方法
+    # 添加使用邮箱登录和使用用户名登录和使用手机号码登录，重写authenticate()方法
     def authenticate(self, username=None, password=None, **kwargs):
         try:
-            user = UserProfile.objects.get(Q(username=username) | Q(email=username))
+            user = UserProfile.objects.get(Q(username=username) | Q(email=username) | Q(mobile=username))
             if user.check_password(password):
                 return user
         except Exception as e:
@@ -305,3 +305,11 @@ class FavTeacherView(View):
             teacher = Teacher.objects.get(id=teacher_id)
             teacher_list.append(teacher)
         return render(request, 'usercenter-fav-teacher.html', {'teacher_list': teacher_list})
+
+
+def page_not_found(request):
+    # 全局404处理函数
+    from django.shortcuts import render_to_response
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
