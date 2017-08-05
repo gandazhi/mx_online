@@ -140,7 +140,7 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'index.html')
+                    return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request, 'login.html', {'msg': '用户还未激活'})
             else:
@@ -315,7 +315,7 @@ class FavTeacherView(View):
 class IndexView(View):
     def get(self, request):
         all_baners = Banner.objects.all().order_by('index')
-        course = Course.objects.filter(is_banner=False)[:5]
+        course = Course.objects.filter(is_banner=False)[:6]
         banner_course = Course.objects.filter(is_banner=True)[:3]
         course_orgs = CourseOrg.objects.all()[:15]
         return render(request, 'index.html',

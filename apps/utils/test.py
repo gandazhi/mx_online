@@ -5,6 +5,6 @@
 __author__ = 'gandazhi'
 __date__ = '17-7-28 下午1:57'
 
-s = '/users/message'
+s = '/org/org_teachers'
 print len(s)
 
