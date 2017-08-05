@@ -11,7 +11,7 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import UserProfile, EmailVerifyRecord
+from .models import UserProfile, EmailVerifyRecord, Banner
 from operation.models import UserCourse, UserFavorite, UserMessage
 from organization.models import CourseOrg, Teacher
 from courses.models import Course
@@ -263,7 +263,12 @@ class MyCourseView(LoginRequiredMixin, View):
 
 class MessageView(LoginRequiredMixin, View):
     def get(self, request):
-        messages = UserMessage.objects.filter(user=request.user.id)
+        messages = UserMessage.objects.filter(user=request.user.id).order_by('-add_time')  # 查询出时间后，做排序，以时间倒序排序显示
+        # 进入个人消息，清空自己的未读消息
+        all_unread_message = messages.filter(has_read=False)
+        for unread_message in all_unread_message:
+            unread_message.has_read = True
+            unread_message.save()
 
         try:
             page = request.GET.get('page', 1)
@@ -305,6 +310,17 @@ class FavTeacherView(View):
             teacher = Teacher.objects.get(id=teacher_id)
             teacher_list.append(teacher)
         return render(request, 'usercenter-fav-teacher.html', {'teacher_list': teacher_list})
+
+
+class IndexView(View):
+    def get(self, request):
+        all_baners = Banner.objects.all().order_by('index')
+        course = Course.objects.filter(is_banner=False)[:5]
+        banner_course = Course.objects.filter(is_banner=True)[:3]
+        course_orgs = CourseOrg.objects.all()[:15]
+        return render(request, 'index.html',
+                      {'all_banners': all_baners, 'course': course, 'banner_course': banner_course,
+                       'course_orgs': course_orgs})
 
 
 def page_not_found(request):
