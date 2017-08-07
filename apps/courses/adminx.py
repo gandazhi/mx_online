@@ -11,10 +11,13 @@ __date__ = '17-6-24 下午1:13'
 class CourseAdmin(object):
     list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_num',
                     'image', 'click_num']
-    search_fields = ['name', 'desc', 'detail', 'degree',  'students', 'fav_num',
+    search_fields = ['name', 'desc', 'detail', 'degree', 'students', 'fav_num',
                      'image', 'click_num']
     list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_num',
                    'image', 'click_num']
+    ordering = ['-click_num']  # 默认排序规则
+    readonly_fields = ['click_num', 'fav_num']  # 设置不能修改的字段
+    exclude = ['click_num']  # 设置不显示的字段，因为设置了readonly_fields所有exclude对click_num不生效
 
 
 class LessonAdmin(object):
